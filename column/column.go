@@ -11,7 +11,6 @@ func New() Widget {
 
 	widget.Stylable.Set("display", "flex")
 	widget.Stylable.Set("flex-direction", "column")
-	widget.Stylable.Set("flex-shrink", "1")
 
 	return Widget{widget}
 }
