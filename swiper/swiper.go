@@ -92,7 +92,7 @@ func (swiper Seed) Script(q script.Script) Script {
 }
 
 func (swiper Script) Update() {
-	swiper.Q.Javascript(swiper.Element() + ".swiper.update();")
+	swiper.Q.Javascript(swiper.Element() + ".swiper.update(); window.dispatchEvent(new Event('resize'));")
 }
 
 func (swiper Script) Reset() {
