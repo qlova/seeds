@@ -1,4 +1,4 @@
-//Provide a photoswipe gallery that can lazy load images from the server. 
+//Provide a photoswipe gallery that can lazy load images from the server.
 package gallery
 
 import "github.com/qlova/seed"

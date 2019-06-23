@@ -32,13 +32,13 @@ func (checkbox Seed) Script(q seed.Script) Script {
 }
 
 func (checkbox Script) Checked() script.Bool {
-	return checkbox.Q.Value(checkbox.Element()+".checked").Bool()
+	return checkbox.Q.Value(checkbox.Element() + ".checked").Bool()
 }
 
-func (checkbox Script) Check() script.Bool {
-	checkbox.Q.Javascript(checkbox.Element()+".check = true;")
+func (checkbox Script) Check() {
+	checkbox.Q.Javascript(checkbox.Element() + ".check = true;")
 }
 
-func (checkbox Script) Uncheck() script.Bool {
-	checkbox.Q.Javascript(checkbox.Element()+".check = false;")
+func (checkbox Script) Uncheck() {
+	checkbox.Q.Javascript(checkbox.Element() + ".check = false;")
 }

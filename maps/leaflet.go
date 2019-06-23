@@ -25,14 +25,14 @@ func New(config ...Options) Seed {
 			options = string(JSON)
 		}
 	}
-	
+
 	Maps.Require("leaflet.js")
 	Maps.Require("leaflet.css")
 
 	Maps.SetSize(100, 100)
 
 	Maps.OnReady(func(q seed.Script) {
-		q.Javascript(`let map = L.map("` + Maps.ID() + `", `+options+`); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map); get("` + Maps.ID() + `").map = map;`)
+		q.Javascript(`let map = L.map("` + Maps.ID() + `", ` + options + `); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map); get("` + Maps.ID() + `").map = map;`)
 	})
 
 	return Seed{Maps}
@@ -54,6 +54,5 @@ func (maps Seed) Script(q script.Script) Script {
 
 func (maps Script) FlyTo(location script.Location) {
 	var raw = location.LanguageType().Raw()
-	maps.Q.Javascript(maps.Element()+".map.flyTo(L.latLng("+raw+".coords.latitude, "+raw+".coords.longitude))")
+	maps.Q.Javascript(maps.Element() + ".map.flyTo(L.latLng(" + raw + ".coords.latitude, " + raw + ".coords.longitude))")
 }
-

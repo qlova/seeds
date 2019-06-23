@@ -11,7 +11,7 @@ type Seed struct {
 
 func New() Seed {
 	var Slider = seed.New()
-	
+
 	Slider.SetTag("input")
 	Slider.SetAttributes("type='range'")
 

@@ -16,12 +16,12 @@ func New() Seed {
 	TextBox.SetAttributes("readonly")
 
 	var FakeBox = textbox.AddTo(TextBox)
-	
+
 	FakeBox.SetAttributes("type='date'")
 	FakeBox.SetOpacity(css.Zero)
 	FakeBox.SetPosition(css.Absolute)
 	FakeBox.SetPointerEvents(css.None)
-	
+
 	FakeBox.OnChange(func(q seed.Script) {
 		TextBox.Script(q).SetValue(FakeBox.Script(q).Value())
 	})

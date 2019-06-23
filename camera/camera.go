@@ -52,16 +52,16 @@ type Image struct {
 
 //Return a source that can be passed to image.SetSource
 func (image Image) Source() script.String {
-	return image.Q.Value(image.LanguageType().Raw()+".toDataURL('image/jpg')").String()
+	return image.Q.Value(image.LanguageType().Raw() + ".toDataURL('image/jpg')").String()
 }
 
 func (camera Script) Capture() Image {
 	var variable = script.Unique()
 
-	camera.Q.Javascript(`let `+variable+";")
-	camera.Q.Javascript(`{var canvas = document.createElement('canvas'); canvas.width = `+camera.Element()+`.videoWidth; canvas.height = `+camera.Element()+`.videoHeight;`)
-	camera.Q.Javascript(`canvas.getContext('2d').drawImage(`+camera.Element()+`, 0, 0, canvas.width, canvas.height);`)
-	camera.Q.Javascript(variable+` = canvas}`)
+	camera.Q.Javascript(`let ` + variable + ";")
+	camera.Q.Javascript(`{var canvas = document.createElement('canvas'); canvas.width = ` + camera.Element() + `.videoWidth; canvas.height = ` + camera.Element() + `.videoHeight;`)
+	camera.Q.Javascript(`canvas.getContext('2d').drawImage(` + camera.Element() + `, 0, 0, canvas.width, canvas.height);`)
+	camera.Q.Javascript(variable + ` = canvas}`)
 
 	return Image{camera.Q, camera.Q.Value(variable).Native()}
 }
