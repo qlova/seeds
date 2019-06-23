@@ -1,40 +1,20 @@
+//Provide a header which is larger than standard text.
 package header
 
-import "image/color"
-import "github.com/qlova/seed"
+import "github.com/qlova/seeds/text"
 
-type Widget struct {
-	seed.Seed
+type Seed struct {
+	text.Seed
 }
 
-//Set the text color.
-func (text Widget) SetColor(c color.Color) {
-	text.SetTextColor(c)
+func New(text ...string) Seed {
+	var Header = text.New(text...)
+	Header.SetTag("h1")
+	return Seed{Header}
 }
 
-//Set the text's font-size.
-func (text Widget) SetSize(s complex128) {
-	text.SetTextSize(s)
-}
-
-func New(s ...string) Widget {
-	widget := seed.New()
-	widget.SetTag("h1")
-
-	if len(s) > 0 {
-		widget.SetText(s[0])
-	}
-
-	widget.SetSize(seed.Auto, seed.Auto)
-
-	widget.Align(0)
-
-	return Widget{widget}
-}
-
-//Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface, s ...string) Widget {
-	var Text = New(s...)
-	parent.Root().Add(Text)
-	return Text
+func AddTo(parent seed.Interface, text ...string) Widget {
+	var Header = New(text...)
+	parent.Root().Add(Header)
+	return Header
 }

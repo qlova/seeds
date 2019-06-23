@@ -1,25 +1,25 @@
+//Provides a textbox that hides its input with dots.
 package passwordbox
 
-import "github.com/qlova/seed"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seeds/textbox"
+)
 
-type Widget struct {
-	seed.Seed
+type Seed struct {
+	textbox.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
-	widget.SetTag("input")
-	widget.SetAttributes(`type="password"`)
+func New() Seed {
+	var PasswordBox = textbox.New()
 
-	widget.SetSize(seed.Auto, seed.Auto)
+	PasswordBox.SetAttributes("type='password'")
 
-	widget.Align(0)
-
-	return Widget{widget}
+	return Seed{PasswordBox}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var PasswordBox = New()
+	parent.Root().Add(PasswordBox)
+	return PasswordBox
 }

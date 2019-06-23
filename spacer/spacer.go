@@ -1,26 +1,28 @@
+//Provides a basic spacer that can provide specific spacing in a row or column.
 package spacer
 
 import "github.com/qlova/seed"
+import "github.com/qlova/seed/style/css"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New(amount ...complex128) Widget {
-	widget := seed.New()
+func New(amount ...complex128) Seed {
+	var Spacer = seed.New()
 
 	if len(amount) > 0 {
-		widget.SetSize(amount[0], amount[0])
+		Spacer.SetFlexBasis(css.Decode(amount[0]))
 	}
 
-	widget.SetUnshrinkable()
+	Spacer.SetUnshrinkable()
 
-	return Widget{widget}
+	return Seed{Spacer}
 }
 
 //Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface, amount ...complex128) Widget {
-	var widget = New(amount...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, amount ...complex128) Seed {
+	var Spacer = New(amount...)
+	parent.Root().Add(Spacer)
+	return Spacer
 }

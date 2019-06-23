@@ -1,26 +1,26 @@
+//Provides emedded documents (such as PDF)
 package document
 
 import "github.com/qlova/seed"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New(path ...string) Widget {
-	widget := seed.New()
+func New(path ...string) Seed {
+	var Document = seed.New()
 
-	widget.SetTag("embed")
+	Document.SetTag("embed")
 	if len(path) > 0 {
-		widget.SetAttributes("src='" + path[0] + "'")
-		seed.NewAsset(path[0]).AddTo(widget)
+		Document.SetAttributes("src='" + path[0] + "'")
+		seed.NewAsset(path[0]).AddTo(Document)
 	}
 
-	return Widget{widget}
+	return Seed{Document}
 }
 
-//Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface, path ...string) Widget {
-	var widget = New(path...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, path ...string) Seed {
+	var Document = New(path...)
+	parent.Root().Add(Document)
+	return Document
 }

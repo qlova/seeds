@@ -1,29 +1,33 @@
+//Provides a simple popup template that will overlay the app. Hidden by default.
 package popup
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/widgets/column"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/style/css"
+	"github.com/qlova/seeds/column"
+)
 
-type Widget struct {
-	column.Widget
+type Seed struct {
+	column.Seed
 }
 
-func New() Widget {
-	widget := column.New()
+func New() Seed {
+	var Popup = column.New()
 
-	widget.Set("position", "fixed")
-	widget.Set("left", "50%")
-	widget.Set("top", "50%")
-	widget.Set("transform", "translate(-50%, -50%)")
-	widget.Set("box-shadow", "3px 4px 20px black")
+	Popup.SetPosition(css.Fixed)
+	Popup.SetLeft(css.Decode(50))
+	Popup.SetTop(css.Decode(50))
+	Popup.Translate(-50, -50)
+	Popup.Set("box-shadow", "3px 4px 20px black")
 
-	widget.SetSize(seed.Auto, seed.Auto)
-	widget.SetHidden()
+	Popup.SetSize(seed.Auto, seed.Auto)
+	Popup.SetHidden()
 
-	return Widget{widget}
+	return Seed{Popup}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var Popup = New()
+	parent.Root().Add(Popup)
+	return Popup
 }

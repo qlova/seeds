@@ -1,21 +1,22 @@
+//Provides a textbox that only accepts email addresses.
 package emailbox
 
 import "github.com/qlova/seed"
-import "github.com/qlova/seed/widgets/textbox"
+import "github.com/qlova/seeds/textbox"
 
-type Widget struct {
-	textbox.Widget
+type Seed struct {
+	textbox.Seed
 }
 
-func New() Widget {
-	widget := textbox.New()
-	widget.SetAttributes(`type="email"`)
+func New() Seed {
+	var EmailBox = textbox.New()
+	EmailBox.SetAttributes(`type="email"`)
 
-	return Widget{widget}
+	return Seed{EmailBox}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var EmailBox = New()
+	parent.Root().Add(EmailBox)
+	return EmailBox
 }

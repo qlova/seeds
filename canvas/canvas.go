@@ -1,3 +1,4 @@
+//Provides a canvas that can be rendered on with webGL.
 package canvas
 
 import qlova "github.com/qlova/script"
@@ -6,46 +7,46 @@ import "github.com/qlova/seed/gl"
 import "github.com/qlova/seed/script"
 import "github.com/qlova/seed/script/webgl"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
+func New() Seed {
+	var Canvas = seed.New()
 
-	widget.SetTag("canvas")
-	widget.SetSize(seed.Auto, seed.Auto)
+	Canvas.SetTag("canvas")
+	Canvas.SetSize(seed.Auto, seed.Auto)
 
-	return Widget{widget}
+	return Seed{Canvas}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var Canvas = New()
+	parent.Root().Add(Canvas)
+	return Canvas
 }
 
 //Return an OpenGL context for this canvas.
-func (widget Widget) OpenGL() gl.Context {
-	return gl.NewContext(widget.Seed)
+func (s Seed) OpenGL() gl.Context {
+	return gl.NewContext(s.Seed)
 }
 
 type Script struct {
 	script.Seed
 }
 
-func (w Widget) Script(q seed.Script) Script {
-	return Script{w.Seed.Script(q)}
+func (canvas Seed) Script(q seed.Script) Script {
+	return Script{canvas.Seed.Script(q)}
 }
 
-func (s Script) OpenGL() webgl.Context {
-	return webgl.NewContext(s.Seed)
+func (canvas Script) OpenGL() webgl.Context {
+	return webgl.NewContext(canvas.Seed)
 }
 
-func (s Script) Width() qlova.Float {
-	return s.Q.Value(s.Element() + ".scrollWidth").Float()
+func (canvas Script) Width() qlova.Float {
+	return canvas.Q.Value(canvas.Element() + ".scrollWidth").Float()
 }
 
-func (s Script) Height() qlova.Float {
-	return s.Q.Value(s.Element() + ".scrollHeight").Float()
+func (canvas Script) Height() qlova.Float {
+	return canvas.Q.Value(canvas.Element() + ".scrollHeight").Float()
 }

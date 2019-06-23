@@ -1,40 +1,48 @@
+//Provides a linke that can be clicked on to launch a website.
 package link
 
 import "github.com/qlova/seed"
 import "github.com/qlova/seed/script"
-import . "github.com/qlova/script"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New(url ...string) Widget {
-	widget := seed.New()
-	widget.SetTag("a")
+func New(url ...string) Seed {
+	var Link = seed.New()
+	Link.SetTag("a")
 
 	if len(url) > 0 {
-		widget.SetAttributes("href='" + url[0] + "'")
+		Link.SetAttributes("href='" + url[0] + "'")
 	} else {
-		widget.SetAttributes("href='#'")
+		Link.SetAttributes("href='#'")
 	}
 
-	return Widget{widget}
+	return Seed{Link}
 }
 
-func AddTo(parent seed.Interface, url ...string) Widget {
-	var widget = New(url...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, url ...string) Seed {
+	var Link = New(url...)
+	parent.Root().Add(Link)
+	return Link
 }
 
 type Script struct {
 	script.Seed
 }
 
-func (w Widget) Script(q script.Script) Script {
-	return Script{w.Seed.Script(q)}
+func (link Seed) Script(q script.Script) Script {
+	return Script{link.Seed.Script(q)}
 }
 
-func (widget Script) SetTarget(target String) {
-	widget.Q.Javascript(widget.Element() + `.href = ` + string(target.LanguageType().Raw()) + ";")
+func (link Script) Target() script.String {
+	return link.Q.Value(link.Element() + `.href`).String()
+}
+
+func (link Script) SetTarget(target script.String) {
+	link.Q.Javascript(link.Element() + `.href = ` + string(target.LanguageType().Raw()) + ";")
+}
+
+func (link Script) Open() {
+	link.Q.Website(link.Target()).Open()
 }

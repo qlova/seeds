@@ -2,27 +2,27 @@ package video
 
 import "github.com/qlova/seed"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New(path ...string) Widget {
-	widget := seed.New()
+func New(path ...string) Seed {
+	var Video = seed.New()
 
-	widget.SetTag("video")
+	Video.SetTag("video")
 	if len(path) > 0 {
-		widget.SetAttributes("src='" + path[0] + "' playsinline preload='auto'")
-		seed.NewAsset(path[0]).AddTo(widget)
+		Video.SetAttributes("src='" + path[0] + "' playsinline preload='auto'")
+		seed.NewAsset(path[0]).AddTo(Video)
 	} else {
-		widget.SetAttributes("playsinline preload='auto'")
+		Video.SetAttributes("playsinline preload='auto'")
 	}
 
-	return Widget{widget}
+	return Seed{Video}
 }
 
 //Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface, path ...string) Widget {
-	var widget = New(path...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, path ...string) Seed {
+	var Video = New(path...)
+	parent.Root().Add(Video)
+	return Video
 }

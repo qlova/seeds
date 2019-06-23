@@ -1,22 +1,24 @@
+//Provides a row that stacks children horizontally.
 package row
 
 import "github.com/qlova/seed"
+import "github.com/qlova/seed/style/css"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
+func New() Seed {
+	var Row = seed.New()
 
-	widget.Stylable.Set("display", "flex")
-	widget.Stylable.Set("flex-direction", "row")
+	Row.SetDisplay(css.Flex)
+	Row.SetFlexDirection(css.Row)
 
-	return Widget{widget}
+	return Seed{Row}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var Row = New()
+	parent.Root().Add(Row)
+	return Row
 }

@@ -1,45 +1,47 @@
+//Provides basic textbox for users to edit single-line text.
 package textbox
 
 import "github.com/qlova/seed"
 import "github.com/qlova/seed/script"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
-	widget.SetTag("input")
+func New() Seed {
+	var TextBox = seed.New()
 
-	widget.SetSize(seed.Auto, seed.Auto)
+	TextBox.SetTag("input")
 
-	widget.Align(0)
+	TextBox.SetSize(seed.Auto, seed.Auto)
+
+	TextBox.Align(0)
 
 	var save = script.NewString()
-	widget.OnChange(func(q seed.Script) {
-		q.Set(save, widget.Script(q).Value())
+	TextBox.OnChange(func(q seed.Script) {
+		q.Set(save, TextBox.Script(q).Value())
 	})
-	widget.OnReady(func(q seed.Script) {
-		widget.Script(q).SetValue(save.Script(q))
+	TextBox.OnReady(func(q seed.Script) {
+		TextBox.Script(q).SetValue(save.Script(q))
 	})
 
-	return Widget{widget}
+	return Seed{TextBox}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var TextBox = New()
+	parent.Root().Add(TextBox)
+	return TextBox
 }
 
-func (widget Widget) SetRequired() {
-	widget.SetAttributes(widget.Attributes() + " required")
+func (textbox Seed) SetRequired() {
+	textbox.SetAttributes(textbox.Attributes() + " required")
 }
 
 type Script struct {
 	script.Seed
 }
 
-func (w Widget) Script(q script.Script) Script {
-	return Script{w.Seed.Script(q)}
+func (textbox Seed) Script(q script.Script) Script {
+	return Script{textbox.Seed.Script(q)}
 }

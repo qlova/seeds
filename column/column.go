@@ -1,22 +1,24 @@
+//Provides a column that stacks children vertically.
 package column
 
 import "github.com/qlova/seed"
+import "github.com/qlova/seed/style/css"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
+func New() Seed {
+	var Column = seed.New()
 
-	widget.Stylable.Set("display", "flex")
-	widget.Stylable.Set("flex-direction", "column")
+	Column.SetDisplay(css.Flex)
+	Column.SetFlexDirection(css.Column)
 
-	return Widget{widget}
+	return Seed{Column}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var Column = New()
+	parent.Root().Add(Column)
+	return Column
 }

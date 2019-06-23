@@ -1,3 +1,4 @@
+//Provide a photoswipe gallery that can lazy load images from the server. 
 package gallery
 
 import "github.com/qlova/seed"
@@ -71,7 +72,7 @@ func init() {
 	`)
 }
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
@@ -92,15 +93,15 @@ func getImageDimension(imagePath string) string {
 }
 
 //Returns gallery that displays 'local' images (in the assets directory).
-func New(images ...string) Widget {
-	gallery := seed.New()
+func New(images ...string) Seed {
+	var Gallery = seed.New()
 
-	gallery.Require("photoswipe.js")
-	gallery.Require("photoswipe.css")
-	gallery.Require("photoswipe-ui.js")
+	Gallery.Require("photoswipe.js")
+	Gallery.Require("photoswipe.css")
+	Gallery.Require("photoswipe-ui.js")
 
-	gallery.OnReady(func(q seed.Script) {
-		q.Javascript(gallery.Script(q).Element() + ".items = [")
+	Gallery.OnReady(func(q seed.Script) {
+		q.Javascript(Gallery.Script(q).Element() + ".items = [")
 		for i, img := range images {
 
 			var dimensions = getImageDimension(seed.Dir + "/assets/" + img)
@@ -113,10 +114,10 @@ func New(images ...string) Widget {
 		q.Javascript("];")
 	})
 
-	return Widget{gallery}
+	return Seed{Gallery}
 }
 
-func AddTo(parent seed.Interface, images ...string) Widget {
+func AddTo(parent seed.Interface, images ...string) Seed {
 	var Gallery = New(images...)
 	parent.Root().Add(Gallery)
 	return Gallery
@@ -126,10 +127,10 @@ type Script struct {
 	script.Seed
 }
 
-func (w Widget) Script(q script.Script) Script {
-	return Script{w.Seed.Script(q)}
+func (gallery Seed) Script(q script.Script) Script {
+	return Script{gallery.Seed.Script(q)}
 }
 
-func (widget Script) Open() {
-	widget.Q.Javascript(`ActivePhotoSwipe = new PhotoSwipe(document.querySelectorAll(".pswp")[0], PhotoSwipeUI_Default, ` + widget.Element() + ".items, {history:false}); ActivePhotoSwipe.init();")
+func (gallery Script) Open() {
+	gallery.Q.Javascript(`ActivePhotoSwipe = new PhotoSwipe(document.querySelectorAll(".pswp")[0], PhotoSwipeUI_Default, ` + gallery.Element() + ".items, {history:false}); ActivePhotoSwipe.init();")
 }

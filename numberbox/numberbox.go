@@ -1,22 +1,25 @@
+//Provides a textbox that only accepts numbers.
 package numberbox
 
-import "github.com/qlova/seed"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seeds/textbox"
+)
 
-import "github.com/qlova/seed/widgets/textbox"
-
-type Widget struct {
-	textbox.Widget
+type Seed struct {
+	textbox.Seed
 }
 
-func New() Widget {
-	var TextBox = textbox.New()
-	TextBox.SetAttributes("type='number'")
+func New() Seed {
+	var NumberBox = textbox.New()
 
-	return Widget{TextBox}
+	NumberBox.SetAttributes("type='number'")
+
+	return Seed{NumberBox}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var NumberBox = New()
+	parent.Root().Add(NumberBox)
+	return NumberBox
 }

@@ -1,42 +1,43 @@
+//Provides a filepicker that allows the user to select a file from their filesystem.
 package filepicker
 
 import "strconv"
 import "github.com/qlova/seed"
 import "github.com/qlova/seed/script"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New(types ...string) Widget {
-	widget := seed.New()
-	widget.SetTag("Input")
+func New(types ...string) Seed {
+	var FilePicker = seed.New()
+	FilePicker.SetTag("Input")
 
 	if len(types) > 0 {
-		widget.SetAttributes(`type="file" accept="` + types[0] + `"`)
+		FilePicker.SetAttributes(`type="file" accept="` + types[0] + `"`)
 	} else {
-		widget.SetAttributes(`type="file" accept="*"`)
+		FilePicker.SetAttributes(`type="file" accept="*"`)
 	}
 
-	return Widget{widget}
+	return Seed{FilePicker}
 }
 
-func AddTo(parent seed.Interface, types ...string) Widget {
-	var widget = New(types...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, types ...string) Seed {
+	var FilePicker = New(types...)
+	parent.Root().Add(FilePicker)
+	return FilePicker
 }
 
 type Script struct {
 	script.Seed
 }
 
-func (w Widget) Script(q seed.Script) Script {
-	return Script{w.Seed.Script(q)}
+func (filepicker Seed) Script(q seed.Script) Script {
+	return Script{filepicker.Seed.Script(q)}
 }
 
-func (s Script) AttachTo(request string, index int) string {
+func (filepicker Script) AttachTo(request string, index int) string {
 
-	return "for (let i = 0; i < " + s.Element() + ".files.length; i++) " + request +
-		`.append("attachment-` + strconv.Itoa(index) + `-"+(i+1), ` + s.Element() + `.files[i], ` + s.Element() + `.files[i].name);`
+	return "for (let i = 0; i < " + filepicker.Element() + ".files.length; i++) " + request +
+		`.append("attachment-` + strconv.Itoa(index) + `-"+(i+1), ` + filepicker.Element() + `.files[i], ` + filepicker.Element() + `.files[i].name);`
 }

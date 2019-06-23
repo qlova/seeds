@@ -1,32 +1,31 @@
+//Provide a seperator that renders as a line that can visually break different sections of a container.
 package line
 
-import "github.com/qlova/seed"
 import "image/color"
+import "github.com/qlova/seed"
 import "github.com/qlova/seed/style/css"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
+func New() Seed {
+	var Line = seed.New()
 
-	widget.SetTag("hr")
+	Line.SetTag("hr")
+	Line.SetSize(seed.Auto, seed.Auto)
+	Line.Set("border-style", "solid")
 
-	widget.SetSize(seed.Auto, seed.Auto)
-
-	widget.Set("border-style", "solid")
-
-	return Widget{widget}
+	return Seed{Line}
 }
 
 //Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var Line = New()
+	parent.Root().Add(Line)
+	return Line
 }
 
-func (widget Widget) SetColor(c color.Color) {
-	widget.SetBorderColor(css.Colour(c))
+func (line Seed) SetColor(c color.Color) {
+	line.SetBorderColor(css.Colour(c))
 }

@@ -1,42 +1,40 @@
+//Provides a form that can be used to group together input elements in order to report their validity.
 package form
 
 import "github.com/qlova/seed"
+import "github.com/qlova/seed/style/css"
 import "github.com/qlova/seed/script"
-import . "github.com/qlova/script"
-import "github.com/qlova/script/language"
-import "github.com/qlova/script/language/javascript"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
-	widget.SetTag("form")
-	widget.SetAttributes(`onsubmit="return false;"`)
+func New() Seed {
+	var Form = seed.New()
 
-	widget.Stylable.Set("display", "flex")
-	widget.Stylable.Set("flex-direction", "column")
+	Form.SetTag("form")
+	Form.SetAttributes(`onsubmit="return false;"`)
 
-	return Widget{widget}
+	Form.SetDisplay(css.Flex)
+	Form.SetFlexDirection(css.Column)
+
+	return Seed{Form}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var Form = New()
+	parent.Root().Add(Form)
+	return Form
 }
 
 type Script struct {
 	script.Seed
 }
 
-func (w Widget) Script(q script.Script) Script {
-	return Script{w.Seed.Script(q)}
+func (form Seed) Script(q script.Script) Script {
+	return Script{form.Seed.Script(q)}
 }
 
-func (widget Script) Invalid() Bool {
-	return widget.Q.BoolFromLanguageType(Javascript.Bit{
-		Expression: language.Statement("!" + widget.Element() + ".reportValidity()"),
-	})
+func (form Script) Invalid() script.Bool {
+	return form.Q.Value("!" + form.Element() + ".reportValidity()").Bool()
 }

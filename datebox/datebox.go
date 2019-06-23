@@ -1,25 +1,27 @@
+//Provides a date-picker inputbox.
 package datebox
 
 import "github.com/qlova/seed"
+import "github.com/qlova/seed/style/css"
 import "github.com/qlova/seed/script"
-import qlova "github.com/qlova/script"
+import "github.com/qlova/seeds/textbox"
 
-import "github.com/qlova/seed/widgets/textbox"
-
-type Widget struct {
-	textbox.Widget
-	fakebox textbox.Widget
+type Seed struct {
+	textbox.Seed
+	fakebox textbox.Seed
 }
 
-func New() Widget {
+func New() Seed {
 	var TextBox = textbox.New()
 	TextBox.SetAttributes("readonly")
 
 	var FakeBox = textbox.AddTo(TextBox)
+	
 	FakeBox.SetAttributes("type='date'")
-	FakeBox.Set("opacity", "0")
-	FakeBox.Set("position", "absolute")
-	FakeBox.Set("pointer-events", "none")
+	FakeBox.SetOpacity(css.Zero)
+	FakeBox.SetPosition(css.Absolute)
+	FakeBox.SetPointerEvents(css.None)
+	
 	FakeBox.OnChange(func(q seed.Script) {
 		TextBox.Script(q).SetValue(FakeBox.Script(q).Value())
 	})
@@ -42,23 +44,23 @@ func New() Widget {
 		q.Javascript(`}`)
 	})
 
-	return Widget{TextBox, FakeBox}
+	return Seed{TextBox, FakeBox}
 }
 
-func (widget Widget) SetRequired() {
-	widget.fakebox.SetRequired()
+func (datebox Seed) SetRequired() {
+	datebox.fakebox.SetRequired()
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var DateBox = New()
+	parent.Root().Add(DateBox)
+	return DateBox
 }
 
-func (widget Widget) Script(q seed.Script) Script {
+func (datebox Seed) Script(q seed.Script) Script {
 	return Script{
-		widget.Widget.Seed.Script(q),
-		widget.fakebox.Seed.Script(q),
+		datebox.Seed.Script(q),
+		datebox.fakebox.Seed.Script(q),
 	}
 }
 

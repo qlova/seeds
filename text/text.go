@@ -1,43 +1,43 @@
+//Provides basic display for text.
 package text
 
 import "image/color"
 import "github.com/qlova/seed"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
 //Set the text color.
-func (text Widget) SetColor(c color.Color) {
+func (text Seed) SetColor(c color.Color) {
 	text.SetTextColor(c)
 }
 
 //Set the text's font-size.
-func (text Widget) SetSize(s complex128) {
+func (text Seed) SetSize(s complex128) {
 	text.SetTextSize(s)
 }
 
-func New(s ...string) Widget {
-	widget := seed.New()
-	widget.SetTag("span")
+func New(message ...string) Seed {
+	var Text = seed.New()
+	Text.SetTag("span")
 
-	widget.ReactNative().SetTag("Text")
+	Text.ReactNative().SetTag("Text")
 
-	if len(s) > 0 {
-		widget.SetText(s[0])
-		widget.ReactNative().SetContent("Text")
+	if len(message) > 0 {
+		Text.SetText(message[0])
+		Text.ReactNative().SetContent("Text")
 	}
 
-	widget.SetSize(seed.Auto, seed.Auto)
+	Text.SetSize(seed.Auto, seed.Auto)
 
-	widget.Align(0)
+	Text.Align(0)
 
-	return Widget{widget}
+	return Seed{Text}
 }
 
-//Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface, s ...string) Widget {
-	var Text = New(s...)
+func AddTo(parent seed.Interface, message ...string) Seed {
+	var Text = New(message...)
 	parent.Root().Add(Text)
 	return Text
 }

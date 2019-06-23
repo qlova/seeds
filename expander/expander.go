@@ -1,26 +1,27 @@
+//Provides an expander that will use up empty space at a specified ratio.
 package expander
 
 import "github.com/qlova/seed"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New(ratio ...float64) Widget {
-	widget := seed.New()
+func New(ratio ...float64) Seed {
+	var Expander = seed.New()
 
 	if len(ratio) > 0 {
-		widget.SetExpand(ratio[0])
+		Expander.SetExpand(ratio[0])
 	} else {
-		widget.SetExpand(1)
+		Expander.SetExpand(1)
 	}
 
-	return Widget{widget}
+	return Seed{Expander}
 }
 
 //Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface, ratio ...float64) Widget {
-	var widget = New(ratio...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, ratio ...float64) Seed {
+	var Expander = New(ratio...)
+	parent.Root().Add(Expander)
+	return Expander
 }

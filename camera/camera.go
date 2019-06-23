@@ -1,35 +1,67 @@
+//Provides an embeded camera that can save snapshots.
 package camera
 
 import "github.com/qlova/seed"
+import "github.com/qlova/seed/script"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
+func New() Seed {
+	var Camera = seed.New()
 
-	widget.SetTag("video")
-	widget.SetAttributes("autoplay")
+	Camera.SetTag("video")
+	Camera.SetAttributes("autoplay")
 
-	widget.OnReady(func(q seed.Script) {
+	Camera.OnReady(func(q seed.Script) {
+		var Camera = Camera.Script(q)
 		q.Javascript(`
 			if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 				navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-					` + widget.Script(q).Element() + `.srcObject = stream;
-					` + widget.Script(q).Element() + `.play();
+					` + Camera.Element() + `.srcObject = stream;
+					` + Camera.Element() + `.play();
 				});
 			}
 		
 		`)
 	})
 
-	return Widget{widget}
+	return Seed{Camera}
 }
 
-//Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var Camera = New()
+	parent.Root().Add(Camera)
+	return Camera
+}
+
+type Script struct {
+	script.Seed
+}
+
+func (s Seed) Script(q seed.Script) Script {
+	return Script{s.Seed.Script(q)}
+}
+
+type Image struct {
+	Q script.Script
+
+	script.Native
+}
+
+//Return a source that can be passed to image.SetSource
+func (image Image) Source() script.String {
+	return image.Q.Value(image.LanguageType().Raw()+".toDataURL('image/jpg')").String()
+}
+
+func (camera Script) Capture() Image {
+	var variable = script.Unique()
+
+	camera.Q.Javascript(`let `+variable+";")
+	camera.Q.Javascript(`{var canvas = document.createElement('canvas'); canvas.width = `+camera.Element()+`.videoWidth; canvas.height = `+camera.Element()+`.videoHeight;`)
+	camera.Q.Javascript(`canvas.getContext('2d').drawImage(`+camera.Element()+`, 0, 0, canvas.width, canvas.height);`)
+	camera.Q.Javascript(variable+` = canvas}`)
+
+	return Image{camera.Q, camera.Q.Value(variable).Native()}
 }

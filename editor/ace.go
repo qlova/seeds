@@ -1,3 +1,4 @@
+//Provides a simple text editor with line numbers.
 package editor
 
 import "github.com/qlova/seed"
@@ -7,33 +8,33 @@ func init() {
 	seed.Embed("/ace.js", []byte(Javascript))
 }
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
 //Returns a full-featured text editor with line numbers and optional syntax highlighting.
-func New(text ...string) Widget {
-	widget := seed.New()
-	widget.SetTag("pre")
+func New(text ...string) Seed {
+	var Editor = seed.New()
+	Editor.SetTag("pre")
 
 	if len(text) > 0 {
-		widget.SetText(text[0])
+		Editor.SetText(text[0])
 	}
 
-	widget.Require("ace.js")
+	Editor.Require("ace.js")
 
-	widget.OnReady(func(q seed.Script) {
-		q.Javascript(`let editor = ace.edit("` + widget.ID() + `"); editor.setShowPrintMargin(false); document.getElementById("` + widget.ID() + `").editor = editor;`)
+	Editor.OnReady(func(q seed.Script) {
+		q.Javascript(`let editor = ace.edit("` + Editor.ID() + `"); editor.setShowPrintMargin(false); document.getElementById("` + Editor.ID() + `").editor = editor;`)
 	})
 
-	return Widget{widget}
+	return Seed{Editor}
 }
 
 //Create a new Text widget and add it to the provided parent.
-func AddTo(parent seed.Interface, path ...string) Widget {
-	var widget = New(path...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, path ...string) Seed {
+	var Editor = New(path...)
+	parent.Root().Add(Editor)
+	return Editor
 }
 
 type Editor struct {

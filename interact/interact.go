@@ -1,3 +1,4 @@
+//Provides helpers to facilitate different user interactions such as draggable seeds.
 package interact
 
 import "github.com/qlova/seed"
@@ -8,6 +9,7 @@ func init() {
 }
 
 type Interaction interface {
+	Interaction()
 	AddTo(i Interactable)
 }
 
@@ -29,6 +31,8 @@ func (i Interactable) Add(in Interaction) {
 type Draggable struct {
 	OnMove func()
 }
+
+func (d Draggable) Interaction() {}
 
 func (d Draggable) AddTo(i Interactable) {
 	i.seed.Javascript(i.register + ".draggable({")

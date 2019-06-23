@@ -1,27 +1,28 @@
+//Provides a button that can be clicked on to trigger an action.
 package button
 
 import "github.com/qlova/seed"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New(text ...string) Widget {
-	widget := seed.New()
+func New(label ...string) Seed {
+	var Button = seed.New()
 
-	widget.SetTag("button")
+	Button.SetTag("button")
 
-	widget.SetSize(seed.Auto, seed.Auto)
+	Button.SetSize(seed.Auto, seed.Auto)
 
-	if len(text) > 0 {
-		widget.SetText(text[0])
+	if len(label) > 0 {
+		Button.SetText(label[0])
 	}
 
-	return Widget{widget}
+	return Seed{Button}
 }
 
-func AddTo(parent seed.Interface, text ...string) Widget {
-	var widget = New(text...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, label ...string) Seed {
+	var Button = New(label...)
+	parent.Root().Add(Button)
+	return Button
 }

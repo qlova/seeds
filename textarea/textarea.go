@@ -1,25 +1,27 @@
+//Provides basic textarea for users to edit multiline text.
 package textarea
 
 import "github.com/qlova/seed"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New() Widget {
-	widget := seed.New()
-	widget.SetTag("textarea")
-	widget.SetAttributes("data-gramm_editor=false")
+func New() Seed {
+	var TextArea = seed.New()
 
-	return Widget{widget}
+	TextArea.SetTag("textarea")
+	TextArea.SetAttributes("data-gramm_editor=false")
+
+	return Seed{TextArea}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var TextArea = New()
+	parent.Root().Add(TextArea)
+	return TextArea
 }
 
-func (widget Widget) SetRequired() {
-	widget.SetAttributes(widget.Attributes() + " required")
+func (textarea Seed) SetRequired() {
+	textarea.SetAttributes(textarea.Attributes() + " required")
 }

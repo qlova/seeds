@@ -1,15 +1,16 @@
+//Provide a listbox where a user can select from multiple items.
 package listbox
 
 import "fmt"
 import "github.com/qlova/seed"
 
-type Widget struct {
+type Seed struct {
 	seed.Seed
 }
 
-func New(values ...string) Widget {
-	widget := seed.New()
-	widget.SetTag("select")
+func New(values ...string) Seed {
+	var ListBox = seed.New()
+	ListBox.SetTag("select")
 
 	var content string
 
@@ -17,13 +18,13 @@ func New(values ...string) Widget {
 		content += fmt.Sprint("<option value='", value, "'>", value, "</option>")
 	}
 
-	widget.SetContent(content)
+	ListBox.SetContent(content)
 
-	return Widget{widget}
+	return Seed{ListBox}
 }
 
-func AddTo(parent seed.Interface, values ...string) Widget {
-	var widget = New(values...)
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface, values ...string) Seed {
+	var listbox = New(values...)
+	parent.Root().Add(listbox)
+	return listbox
 }
