@@ -45,3 +45,7 @@ type Script struct {
 func (textbox Seed) Script(q script.Script) Script {
 	return Script{textbox.Seed.Script(q)}
 }
+
+func (textbox Script) SetReadOnly(state script.Bool) {
+	textbox.Q.Javascript(textbox.Element() + ".readOnly = " + state.LanguageType().Raw() + ";")
+}
