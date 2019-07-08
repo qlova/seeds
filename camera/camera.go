@@ -1,6 +1,8 @@
 //Provides an embeded camera that can save snapshots.
 package camera
 
+import "strconv"
+
 import "github.com/qlova/seed"
 import "github.com/qlova/seed/script"
 
@@ -64,4 +66,8 @@ func (camera Script) Capture() Image {
 	camera.Q.Javascript(variable + ` = canvas}`)
 
 	return Image{camera.Q, camera.Q.Value(variable).Native()}
+}
+
+func (image Image) AttachTo(request string, index int) string {
+	return request + `.append("attachment-` + strconv.Itoa(index) + `-1", ` + image.LanguageType().Raw() + `.toBlob(function(b){}, 'image/jpeg', 0.95), 'camera.jpeg');`
 }
