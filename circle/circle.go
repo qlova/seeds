@@ -13,7 +13,7 @@ func New(size ...complex128) Seed {
 	if len(size) > 0 {
 		Circle.SetSize(size[0], size[0])
 	}
-	
+
 	Circle.SetRoundedCorners(50)
 
 	return Seed{Circle}
