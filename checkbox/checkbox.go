@@ -36,9 +36,13 @@ func (checkbox Script) Checked() script.Bool {
 }
 
 func (checkbox Script) Check() {
-	checkbox.Q.Javascript(checkbox.Element() + ".check = true;")
+	checkbox.Q.Javascript(checkbox.Element() + ".checked = true;")
+}
+
+func (checkbox Script) Toggle() {
+	checkbox.Q.Javascript(checkbox.Element() + ".checked = !" + checkbox.Element() + ".checked ;")
 }
 
 func (checkbox Script) Uncheck() {
-	checkbox.Q.Javascript(checkbox.Element() + ".check = false;")
+	checkbox.Q.Javascript(checkbox.Element() + ".checked = false;")
 }
