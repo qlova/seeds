@@ -7,9 +7,9 @@ type Effect string
 const Coverflow = "coverflow"
 
 type CoverflowEffectOptions struct {
-	Rotate       float64 `json:"rotate,omitempty"`
+	Rotate       float64 `json:"rotate"`
 	Stretch      float64 `json:"stretch,omitempty"`
-	Depth        int     `json:"depth,omitempty"`
+	Depth        int     `json:"depth"`
 	Modifier     int     `json:"modifier,omitempty"`
 	SlideShadows bool    `json:"slideShadows"`
 }
@@ -24,4 +24,8 @@ type Options struct {
 	CoverflowEffect CoverflowEffectOptions `json:"coverflowEffect,omitempty"`
 
 	Pagination PaginationOptions `json:"pagination,omitempty"`
+
+	Observer             bool `json:"observer,omitempty"`
+	ObserveParents       bool `json:"observeParents,omitempty"`
+	ObserveSlideChildren bool `json:"observeSlideChildren,omitempty"`
 }

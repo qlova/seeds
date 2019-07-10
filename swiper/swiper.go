@@ -56,7 +56,16 @@ func New(config ...Options) Seed {
 	}
 
 	Swiper.OnReady(func(q seed.Script) {
-		q.Javascript(Swiper.Script(q).Element() + `.swiper = new Swiper('#` + Swiper.ID() + `', ` + options + `);`)
+		q.Javascript(Swiper.Script(q).Element() + `.swiper = new Swiper('#` + Swiper.ID() + `', ` + options +
+			`); window.addEventListener("resize", function() {
+				setTimeout(function() {
+					` + Swiper.Script(q).Element() + `.swiper.update();
+				}, 250);
+			}, false);window.addEventListener("orientationchange", function() {
+				setTimeout(function() {
+					` + Swiper.Script(q).Element() + `.swiper.update();
+				}, 250);
+			}, false);`)
 	})
 
 	return Seed{0, Swiper, wrapper}
