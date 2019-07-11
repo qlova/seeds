@@ -16,8 +16,10 @@ func New(label ...string) Seed {
 	Button.SetTag("button")
 
 	Button.SetSize(seed.Auto, seed.Auto)
+	Button.AlignChildren(0)
 
 	var Text = text.AddTo(Button, label...)
+
 
 	return Seed{Button, Text}
 }
