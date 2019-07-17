@@ -2,8 +2,8 @@
 package datebox
 
 import "github.com/qlova/seed"
-import "github.com/qlova/seed/style/css"
 import "github.com/qlova/seed/script"
+import "github.com/qlova/seed/style/css"
 import "github.com/qlova/seeds/textbox"
 
 type Seed struct {
@@ -18,7 +18,7 @@ func New() Seed {
 	var FakeBox = textbox.AddTo(TextBox)
 
 	FakeBox.SetAttributes("type='date'")
-	FakeBox.SetOpacity(css.Zero)
+	FakeBox.SetOpacity(css.Number(0))
 	FakeBox.SetPosition(css.Absolute)
 	FakeBox.SetPointerEvents(css.None)
 
@@ -65,11 +65,11 @@ func (datebox Seed) Script(q seed.Script) Script {
 }
 
 type Script struct {
-	script.Seed
+	textbox.Script
 	fakebox script.Seed
 }
 
-func (script Script) SetValue(value qlova.String) {
+func (script Script) SetValue(value script.String) {
 	script.Seed.SetValue(value)
 	script.fakebox.SetValue(value)
 }

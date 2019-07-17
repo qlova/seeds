@@ -20,7 +20,6 @@ func New(label ...string) Seed {
 
 	var Text = text.AddTo(Button, label...)
 
-
 	return Seed{Button, Text}
 }
 
