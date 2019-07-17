@@ -25,3 +25,7 @@ func AddTo(parent seed.Interface) Seed {
 func (textarea Seed) SetRequired() {
 	textarea.SetAttributes(textarea.Attributes() + " required")
 }
+
+func (textarea Seed) SetPlaceholder(placeholder string) {
+	textarea.SetAttributes(textarea.Attributes() + " placeholder='" + placeholder + "' ")
+}
