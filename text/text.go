@@ -18,6 +18,11 @@ func (text Seed) SetSize(s complex128) {
 	text.SetTextSize(s)
 }
 
+//Set the text's font-size.
+func (text Seed) Underline() {
+	text.Set("text-decoration", "underline")
+}
+
 func New(message ...string) Seed {
 	var Text = seed.New()
 	Text.SetTag("span")
