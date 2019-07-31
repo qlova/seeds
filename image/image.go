@@ -2,6 +2,7 @@
 package image
 
 import "github.com/qlova/seed"
+import "github.com/qlova/seed/html"
 
 type Seed struct {
 	seed.Seed
@@ -12,7 +13,7 @@ func New(path ...string) Seed {
 
 	Image.SetTag("img")
 	if len(path) > 0 {
-		Image.SetAttributes("src='" + path[0] + "'")
+		Image.Element.Set(html.Source, path[0])
 		seed.NewAsset(path[0]).AddTo(Image)
 	}
 
