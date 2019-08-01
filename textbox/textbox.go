@@ -1,9 +1,12 @@
 //Provides basic textbox for users to edit single-line text.
 package textbox
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/style/css"
-import "github.com/qlova/seed/script"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+	"github.com/qlova/seed/script/global"
+	"github.com/qlova/seed/style/css"
+)
 
 //Seed is a textbox that allows single-line text input.
 type Seed struct {
@@ -37,7 +40,7 @@ func New() Seed {
 	FullscreenEditor.CSS().SetWidth(css.Number(100).Vw())
 	FullscreenEditor.CSS().SetHeight(css.Number(100).Vh())
 
-	var save = script.NewString()
+	var save = global.NewString()
 
 	var FullscreenTextBox = seed.AddTo(FullscreenEditor)
 	FullscreenTextBox.SetTag("input")
@@ -63,7 +66,7 @@ func New() Seed {
 	TextBox.When(KeyboardHidden, func(q seed.Script) {
 		FullscreenTextBox.Script(q).Blur()
 		TextBox.Script(q).SetValue(FullscreenTextBox.Script(q).Value())
-		q.Set(save, TextBox.Script(q).Value())
+		save.Set(q, TextBox.Script(q).Value())
 		q.After(250, func() {
 			FullscreenEditor.Script(q).SetHidden()
 		})
@@ -95,10 +98,10 @@ func New() Seed {
 	})
 
 	TextBox.OnChange(func(q seed.Script) {
-		q.Set(save, TextBox.Script(q).Value())
+		save.Set(q, TextBox.Script(q).Value())
 	})
 	TextBox.OnReady(func(q seed.Script) {
-		TextBox.Script(q).SetValue(save.Script(q))
+		TextBox.Script(q).SetValue(save.Get(q))
 	})
 
 	return Seed{TextBox, FullscreenTextBox}
