@@ -3,6 +3,7 @@ package textbox
 
 import (
 	"github.com/qlova/seed"
+	"github.com/qlova/seed/html"
 	"github.com/qlova/seed/script"
 	"github.com/qlova/seed/script/global"
 	"github.com/qlova/seed/style/css"
@@ -123,6 +124,11 @@ func (textbox Seed) SetAttributes(attr string) {
 //SetPlaceholder sets the placeholder to appear when there is no usertext in the textbox.
 func (textbox Seed) SetPlaceholder(placeholder string) {
 	textbox.SetAttributes(textbox.Attributes() + " placeholder='" + placeholder + "' ")
+}
+
+//SetValue sets the initial value of the text box.
+func (textbox Seed) SetValue(value string) {
+	textbox.Element.Set(html.Value, value)
 }
 
 //SetRequired sets this seed to be required within a parent form seed.
