@@ -13,7 +13,8 @@ type Seed struct {
 func New() Seed {
 	var NumberBox = textbox.New()
 
-	NumberBox.SetAttributes("type='number'")
+	NumberBox.SetAttributes(`inputmode="numeric" pattern="[0-9]*" type='number'`)
+	NumberBox.Fullscreen.SetAttributes(`inputmode="numeric" pattern="[0-9]*" type='number'`)
 
 	return Seed{NumberBox}
 }
