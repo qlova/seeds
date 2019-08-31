@@ -103,6 +103,7 @@ func New() Seed {
 	})
 	TextBox.OnReady(func(q seed.Script) {
 		TextBox.Script(q).SetValue(save.Get(q))
+		FullscreenTextBox.Script(q).SetValue(save.Get(q))
 	})
 
 	return Seed{TextBox, FullscreenTextBox}
@@ -133,7 +134,7 @@ func (textbox Seed) SetValue(value string) {
 
 //SetRequired sets this seed to be required within a parent form seed.
 func (textbox Seed) SetRequired() {
-	textbox.SetAttributes(textbox.Attributes() + " required")
+	textbox.Seed.SetAttributes(textbox.Seed.Attributes() + " required")
 }
 
 //Script is the script context to this seed.
