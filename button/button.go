@@ -15,6 +15,9 @@ func New(label ...string) Seed {
 
 	Button.SetTag("button")
 
+	//Fix issues with form validation.
+	Button.Set("type", "button")
+
 	Button.SetSize(seed.Auto, seed.Auto)
 	Button.AlignChildren(0)
 
