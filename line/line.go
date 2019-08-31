@@ -11,7 +11,7 @@ func New() Seed {
 	var Line = seed.New()
 
 	Line.SetTag("hr")
-	Line.Set("border", "none")
+	Line.CSS().Set("border", "none")
 	Line.SetSize(100, 1*seed.Px)
 
 	return Seed{Line}
