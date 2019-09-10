@@ -42,5 +42,5 @@ type Editor struct {
 }
 
 func (editor Editor) Open(f script.File) {
-	editor.Javascript(`var reader = new FileReader(); reader.onload = function(e) { var data = e.target.result; get("` + editor.ID + `").editor.setValue(data); }; reader.readAsText(` + f.Raw() + `);`)
+	editor.Javascript(`var reader = new FileReader(); reader.onload = function(e) { var data = e.target.result; get("` + editor.ID + `").editor.setValue(data); }; reader.readAsText(` + f.LanguageType().Raw() + `);`)
 }
