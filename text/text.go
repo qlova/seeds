@@ -1,8 +1,12 @@
 //Provides basic display for text.
 package text
 
-import "image/color"
-import "github.com/qlova/seed"
+import (
+	"image/color"
+
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/style"
+)
 
 type Seed struct {
 	seed.Seed
@@ -16,6 +20,11 @@ func (text Seed) SetColor(c color.Color) {
 //Set the text's font-size.
 func (text Seed) SetSize(s complex128) {
 	text.SetTextSize(s)
+}
+
+//SetShadow sets the text's shadow.
+func (text Seed) SetShadow(shadow style.Shadow) {
+	text.SetTextShadow(shadow)
 }
 
 //Set the text's font-size.
