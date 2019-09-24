@@ -38,6 +38,8 @@ func New(config ...Options) Seed {
 
 	wrapper := seed.AddTo(Swiper)
 	wrapper.SetClass("swiper-wrapper")
+	wrapper.SetRow()
+	wrapper.SetSize(100, 100)
 
 	pagination := seed.AddTo(Swiper)
 	pagination.SetClass("swiper-pagination")
