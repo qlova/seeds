@@ -1,20 +1,26 @@
 //Provide an image that can display various image types including png, jpeg and svg.
 package image
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/html"
+import (
+	"path"
+
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/html"
+)
 
 type Seed struct {
 	seed.Seed
 }
 
-func New(path ...string) Seed {
+func New(source ...string) Seed {
 	var Image = seed.New()
 
 	Image.SetTag("img")
-	if len(path) > 0 {
-		Image.Element.Set(html.Source, path[0])
-		seed.NewAsset(path[0]).AddTo(Image)
+	if len(source) > 0 {
+		var p = source[0]
+		Image.Element.Set(html.Source, p)
+		seed.NewAsset(p).AddTo(Image)
+		Image.Set("alt", p[:len(p)-len(path.Ext(p))])
 	}
 
 	return Seed{Image}
