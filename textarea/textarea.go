@@ -1,7 +1,9 @@
 //Provides basic textarea for users to edit multiline text.
 package textarea
 
-import "github.com/qlova/seed"
+import (
+	"github.com/qlova/seed"
+)
 
 type Seed struct {
 	seed.Seed
@@ -12,6 +14,7 @@ func New() Seed {
 
 	TextArea.SetTag("textarea")
 	TextArea.SetAttributes("data-gramm_editor=false")
+	TextArea.CSS().Set("resize", "none")
 
 	return Seed{TextArea}
 }
