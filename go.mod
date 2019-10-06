@@ -2,7 +2,6 @@ module github.com/qlova/seeds
 
 go 1.13
 
-replace github.com/qlova/seed => /home/quentin/Git/qlova/seed
 
 require (
 	code.cloudfoundry.org/bytefmt v0.0.0-20190819182555-854d396b647c // indirect
