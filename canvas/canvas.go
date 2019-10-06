@@ -31,22 +31,22 @@ func (s Seed) OpenGL() gl.Context {
 	return gl.NewContext(s.Seed)
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (canvas Seed) Script(q seed.Script) Script {
-	return Script{canvas.Seed.Script(q)}
+func (canvas Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{canvas.Seed.Ctx(q)}
 }
 
-func (canvas Script) OpenGL() webgl.Context {
+func (canvas Ctx) OpenGL() webgl.Context {
 	return webgl.NewContext(canvas.Seed)
 }
 
-func (canvas Script) Width() qlova.Float {
+func (canvas Ctx) Width() qlova.Float {
 	return canvas.Q.Value(canvas.Element() + ".scrollWidth").Float()
 }
 
-func (canvas Script) Height() qlova.Float {
+func (canvas Ctx) Height() qlova.Float {
 	return canvas.Q.Value(canvas.Element() + ".scrollHeight").Float()
 }

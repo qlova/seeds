@@ -57,15 +57,15 @@ func New(config ...Options) Seed {
 		}
 	}
 
-	Swiper.OnReady(func(q seed.Script) {
-		q.Javascript(Swiper.Script(q).Element() + `.swiper = new Swiper('#` + Swiper.ID() + `', ` + options +
+	Swiper.OnReady(func(q script.Ctx) {
+		q.Javascript(Swiper.Ctx(q).Element() + `.swiper = new Swiper('#` + Swiper.ID() + `', ` + options +
 			`); window.addEventListener("resize", function() {
 				setTimeout(function() {
-					` + Swiper.Script(q).Element() + `.swiper.update();
+					` + Swiper.Ctx(q).Element() + `.swiper.update();
 				}, 250);
 			}, false);window.addEventListener("orientationchange", function() {
 				setTimeout(function() {
-					` + Swiper.Script(q).Element() + `.swiper.update();
+					` + Swiper.Ctx(q).Element() + `.swiper.update();
 				}, 250);
 			}, false);`)
 	})
@@ -94,27 +94,27 @@ func (swiper *Seed) NewSlide() Slide {
 	return Slide{swiper.slides - 1, seed}
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (swiper Seed) Script(q script.Script) Script {
-	return Script{swiper.Seed.Script(q)}
+func (swiper Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{swiper.Seed.Ctx(q)}
 }
 
-func (swiper Script) Update() {
+func (swiper Ctx) Update() {
 	swiper.Q.Javascript(swiper.Element() + ".swiper.update(); window.dispatchEvent(new Event('resize'));")
 }
 
-func (swiper Script) Reset() {
+func (swiper Ctx) Reset() {
 	swiper.Q.Javascript(swiper.Element() + ".swiper.slideTo(0, 0);")
 }
 
-func (swiper Script) Goto(slide Slide) {
+func (swiper Ctx) Goto(slide Slide) {
 	swiper.Q.Javascript(swiper.Element() + ".swiper.slideTo(" + fmt.Sprint(slide.index) + ", 1000);")
 }
 
-func (swiper Script) Swipe(direction Direction) {
+func (swiper Ctx) Swipe(direction Direction) {
 	if direction == Left {
 		swiper.Q.Javascript(swiper.Element() + ".swiper.slidePrev();")
 	}
@@ -124,11 +124,11 @@ func (swiper Script) Swipe(direction Direction) {
 }
 
 //Are we on the last slide?
-func (swiper Script) Left() script.Bool {
+func (swiper Ctx) Left() script.Bool {
 	return swiper.Q.Value(swiper.Element() + ".swiper.isBeginning").Bool()
 }
 
 //Are we on the first slide?
-func (swiper Script) Right() script.Bool {
+func (swiper Ctx) Right() script.Bool {
 	return swiper.Q.Value(swiper.Element() + ".swiper.isEnd").Bool()
 }

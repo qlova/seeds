@@ -1,7 +1,11 @@
 package particles
 
-import "github.com/qlova/seed"
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+)
 
 func init() {
 	seed.Embed("/particles.js", []byte(JS))
@@ -21,7 +25,7 @@ func New(options Options) Seed {
 		panic("Invalid Particle options")
 	}
 
-	container.OnReady(func(q seed.Script) {
+	container.OnReady(func(q script.Ctx) {
 		q.Javascript("particlesJS('" + container.ID() + "', " + string(JSON) + ")")
 	})
 

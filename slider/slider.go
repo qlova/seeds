@@ -36,10 +36,10 @@ func (slider Seed) SetMax(max int) {
 	slider.SetAttributes(slider.Attributes() + " max='" + strconv.Itoa(max) + "'")
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (slider Seed) Script(q script.Script) Script {
-	return Script{slider.Seed.Script(q)}
+func (slider Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{slider.Seed.Ctx(q)}
 }

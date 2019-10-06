@@ -40,10 +40,10 @@ func AddTo(parent seed.Interface) Seed {
 
 //Show this popup.
 func (popup Seed) Show(q seed.Script) {
-	popup.Script(q).SetVisible()
+	popup.Ctx(q).SetVisible()
 }
 
 //Hide this popup.
 func (popup Seed) Hide(q seed.Script) {
-	popup.Script(q).SetHidden()
+	popup.Ctx(q).SetHidden()
 }

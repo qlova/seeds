@@ -31,7 +31,7 @@ func New(config ...Options) Seed {
 
 	Maps.SetSize(100, 100)
 
-	Maps.OnReady(func(q seed.Script) {
+	Maps.OnReady(func(q script.Ctx) {
 		q.Javascript(`let map = L.map("` + Maps.ID() + `", ` + options + `); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map); get("` + Maps.ID() + `").map = map;`)
 	})
 
@@ -44,15 +44,15 @@ func AddTo(parent seed.Interface, config ...Options) Seed {
 	return Maps
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (maps Seed) Script(q script.Script) Script {
-	return Script{maps.Seed.Script(q)}
+func (maps Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{maps.Seed.Ctx(q)}
 }
 
-func (maps Script) FlyTo(location script.Location) {
+func (maps Ctx) FlyTo(location script.Location) {
 	var raw = location.LanguageType().Raw()
 	maps.Q.Javascript(maps.Element() + ".map.flyTo(L.latLng(" + raw + ".coords.latitude, " + raw + ".coords.longitude))")
 }

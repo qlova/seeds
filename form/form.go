@@ -27,14 +27,14 @@ func AddTo(parent seed.Interface) Seed {
 	return Form
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (form Seed) Script(q script.Script) Script {
-	return Script{form.Seed.Script(q)}
+func (form Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{form.Seed.Ctx(q)}
 }
 
-func (form Script) Invalid() script.Bool {
+func (form Ctx) Invalid() script.Bool {
 	return form.Q.Value("!" + form.Element() + ".reportValidity()").Bool()
 }

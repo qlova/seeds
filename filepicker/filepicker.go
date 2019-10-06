@@ -28,15 +28,15 @@ func AddTo(parent seed.Interface, types ...string) Seed {
 	return FilePicker
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (filepicker Seed) Script(q seed.Script) Script {
-	return Script{filepicker.Seed.Script(q)}
+func (filepicker Seed) Ctx(q seed.Script) Ctx {
+	return Ctx{filepicker.Seed.Ctx(q)}
 }
 
-func (filepicker Script) AttachTo(request string, index int) string {
+func (filepicker Ctx) AttachTo(request string, index int) string {
 
 	return "for (let i = 0; i < " + filepicker.Element() + ".files.length; i++) " + request +
 		`.append("attachment-` + strconv.Itoa(index) + `-"+(i+1), ` + filepicker.Element() + `.files[i], ` + filepicker.Element() + `.files[i].name);`

@@ -48,32 +48,32 @@ func New() Seed {
 	FullscreenTextBox.SetSize(100, 100)
 	FullscreenTextBox.SetTextAlign(css.Center)
 
-	FullscreenTextBox.OnEnter(func(q seed.Script) {
+	FullscreenTextBox.OnEnter(func(q script.Ctx) {
 		KeyboardHidden.Set(q)
 	})
-	FullscreenTextBox.OnFocusLost(func(q seed.Script) {
+	FullscreenTextBox.OnFocusLost(func(q script.Ctx) {
 		KeyboardHidden.Set(q)
 	})
-	FullscreenTextBox.OnClick(func(q seed.Script) {
+	FullscreenTextBox.OnClick(func(q script.Ctx) {
 		KeyboardHidden.Set(q)
 	})
 
-	TextBox.When(KeyboardVisible, func(q seed.Script) {
-		FullscreenEditor.Script(q).SetVisible()
-		FullscreenTextBox.Script(q).Focus()
-		FullscreenTextBox.Script(q).SetValue(TextBox.Script(q).Value())
+	TextBox.When(KeyboardVisible, func(q script.Ctx) {
+		FullscreenEditor.Ctx(q).SetVisible()
+		FullscreenTextBox.Ctx(q).Focus()
+		FullscreenTextBox.Ctx(q).SetValue(TextBox.Ctx(q).Value())
 	})
 
-	TextBox.When(KeyboardHidden, func(q seed.Script) {
-		FullscreenTextBox.Script(q).Blur()
-		TextBox.Script(q).SetValue(FullscreenTextBox.Script(q).Value())
-		save.Set(q, TextBox.Script(q).Value())
+	TextBox.When(KeyboardHidden, func(q script.Ctx) {
+		FullscreenTextBox.Ctx(q).Blur()
+		TextBox.Ctx(q).SetValue(FullscreenTextBox.Ctx(q).Value())
+		save.Set(q, TextBox.Ctx(q).Value())
 		q.After(250, func() {
-			FullscreenEditor.Script(q).SetHidden()
+			FullscreenEditor.Ctx(q).SetHidden()
 		})
 	})
 
-	TextBox.OnFocus(func(q seed.Script) {
+	TextBox.OnFocus(func(q script.Ctx) {
 		q.Javascript(`let height = document.body.clientHeight;`)
 		q.After(100, func() {
 			q.Javascript(`let done = false; for (t of [100, 250, 500, 600, 700, 800, 900, 1000]) { setTimeout(function(){if (!done && height > document.body.clientHeight) {done=true;`)
@@ -86,7 +86,7 @@ func New() Seed {
 				if (document.body.clientHeight > new_height) {`)
 
 			KeyboardHidden.Set(q)
-			FullscreenEditor.Script(q).SetHidden()
+			FullscreenEditor.Ctx(q).SetHidden()
 
 			q.Javascript(`return;}
 				
@@ -98,12 +98,12 @@ func New() Seed {
 		})
 	})
 
-	TextBox.OnChange(func(q seed.Script) {
-		save.Set(q, TextBox.Script(q).Value())
+	TextBox.OnChange(func(q script.Ctx) {
+		save.Set(q, TextBox.Ctx(q).Value())
 	})
-	TextBox.OnReady(func(q seed.Script) {
-		TextBox.Script(q).SetValue(save.Get(q))
-		FullscreenTextBox.Script(q).SetValue(save.Get(q))
+	TextBox.OnReady(func(q script.Ctx) {
+		TextBox.Ctx(q).SetValue(save.Get(q))
+		FullscreenTextBox.Ctx(q).SetValue(save.Get(q))
 	})
 
 	return Seed{TextBox, FullscreenTextBox}
@@ -138,23 +138,23 @@ func (textbox Seed) SetRequired() {
 }
 
 //Script is the script context to this seed.
-type Script struct {
+type Ctx struct {
 	script.Seed
 	Fullscreen script.Seed
 }
 
 //Script returns the script context to this seed.
-func (textbox Seed) Script(q script.Script) Script {
-	return Script{textbox.Seed.Script(q), textbox.Fullscreen.Script(q)}
+func (textbox Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{textbox.Seed.Ctx(q), textbox.Fullscreen.Ctx(q)}
 }
 
 //SetReadOnly disables the textbox from being edited.
-func (textbox Script) SetReadOnly(state script.Bool) {
+func (textbox Ctx) SetReadOnly(state script.Bool) {
 	textbox.Q.Javascript(textbox.Element() + ".readOnly = " + state.LanguageType().Raw() + ";")
 }
 
 //SetPlaceholder sets this seed's placeholder.
-func (textbox Script) SetPlaceholder(placeholder script.String) {
+func (textbox Ctx) SetPlaceholder(placeholder script.String) {
 	textbox.Q.Javascript(textbox.Element() + ".placeholder = " + placeholder.LanguageType().Raw() + ";")
 	textbox.Q.Javascript(textbox.Fullscreen.Element() + ".placeholder = " + placeholder.LanguageType().Raw() + ";")
 }

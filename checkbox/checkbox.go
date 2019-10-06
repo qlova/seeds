@@ -23,26 +23,26 @@ func AddTo(parent seed.Interface) Seed {
 	return Checkbox
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (checkbox Seed) Script(q seed.Script) Script {
-	return Script{checkbox.Seed.Script(q)}
+func (checkbox Seed) Ctx(q seed.Script) Ctx {
+	return Ctx{checkbox.Seed.Ctx(q)}
 }
 
-func (checkbox Script) Checked() script.Bool {
+func (checkbox Ctx) Checked() script.Bool {
 	return checkbox.Q.Value(checkbox.Element() + ".checked").Bool()
 }
 
-func (checkbox Script) Check() {
+func (checkbox Ctx) Check() {
 	checkbox.Q.Javascript(checkbox.Element() + ".checked = true;")
 }
 
-func (checkbox Script) Toggle() {
+func (checkbox Ctx) Toggle() {
 	checkbox.Q.Javascript(checkbox.Element() + ".checked = !" + checkbox.Element() + ".checked ;")
 }
 
-func (checkbox Script) Uncheck() {
+func (checkbox Ctx) Uncheck() {
 	checkbox.Q.Javascript(checkbox.Element() + ".checked = false;")
 }

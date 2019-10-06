@@ -36,18 +36,18 @@ func (button Seed) SetText(text string) {
 	button.Text.SetText(text)
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 	Text script.Seed
 }
 
-func (button Seed) Script(q seed.Script) Script {
-	return Script{
-		button.Seed.Script(q),
-		button.Text.Script(q),
+func (button Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{
+		button.Seed.Ctx(q),
+		button.Text.Ctx(q),
 	}
 }
 
-func (button Script) SetText(text script.String) {
+func (button Ctx) SetText(text script.String) {
 	button.Text.SetText(text)
 }

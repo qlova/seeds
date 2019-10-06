@@ -27,22 +27,22 @@ func AddTo(parent seed.Interface, url ...string) Seed {
 	return Link
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (link Seed) Script(q script.Script) Script {
-	return Script{link.Seed.Script(q)}
+func (link Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{link.Seed.Ctx(q)}
 }
 
-func (link Script) Target() script.String {
+func (link Ctx) Target() script.String {
 	return link.Q.Value(link.Element() + `.href`).String()
 }
 
-func (link Script) SetTarget(target script.String) {
+func (link Ctx) SetTarget(target script.String) {
 	link.Q.Javascript(link.Element() + `.href = ` + string(target.LanguageType().Raw()) + ";")
 }
 
-func (link Script) Open() {
+func (link Ctx) Open() {
 	link.Q.Website(link.Target()).Open()
 }

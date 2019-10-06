@@ -23,7 +23,7 @@ func New(text ...string) Seed {
 
 	Editor.Require("ace.js")
 
-	Editor.OnReady(func(q seed.Script) {
+	Editor.OnReady(func(q script.Ctx) {
 		q.Javascript(`let editor = ace.edit("` + Editor.ID() + `"); editor.setShowPrintMargin(false); document.getElementById("` + Editor.ID() + `").editor = editor;`)
 	})
 

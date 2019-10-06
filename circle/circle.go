@@ -1,7 +1,9 @@
 //Provides a basic circle renderer, can contain children.
 package circle
 
-import "github.com/qlova/seed"
+import (
+	"github.com/qlova/seed"
+)
 
 type Seed struct {
 	seed.Seed
@@ -15,6 +17,7 @@ func New(size ...complex128) Seed {
 	}
 
 	Circle.SetRoundedCorners(50)
+	Circle.SetCol()
 
 	return Seed{Circle}
 }

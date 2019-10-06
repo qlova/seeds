@@ -16,8 +16,8 @@ func New() Seed {
 	Camera.SetTag("video")
 	Camera.SetAttributes("autoplay")
 
-	Camera.OnReady(func(q seed.Script) {
-		var Camera = Camera.Script(q)
+	Camera.OnReady(func(q script.Ctx) {
+		var Camera = Camera.Ctx(q)
 		q.Javascript(`
 			if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 				navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
@@ -38,16 +38,16 @@ func AddTo(parent seed.Interface) Seed {
 	return Camera
 }
 
-type Script struct {
+type Ctx struct {
 	script.Seed
 }
 
-func (s Seed) Script(q seed.Script) Script {
-	return Script{s.Seed.Script(q)}
+func (s Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{s.Seed.Ctx(q)}
 }
 
 type Image struct {
-	Q script.Script
+	Q script.Ctx
 
 	script.Native
 }
@@ -57,7 +57,7 @@ func (image Image) Source() script.String {
 	return image.Q.Value(image.LanguageType().Raw() + ".toDataURL('image/jpg')").String()
 }
 
-func (camera Script) Capture() Image {
+func (camera Ctx) Capture() Image {
 	var variable = script.Unique()
 
 	camera.Q.Javascript(`let ` + variable + ";")
