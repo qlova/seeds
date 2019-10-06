@@ -9,7 +9,7 @@ require (
 	github.com/matryer/try v0.0.0-20161228173917-9ac251b645a2 // indirect
 	github.com/pierrec/cmdflag v0.0.2 // indirect
 	github.com/qlova/script v0.0.0-20190731095237-dfd47aef1c0f
-	github.com/qlova/seed v0.0.0-20191006051548-348c033b8d70
+	github.com/qlova/seed v0.1.1
 	github.com/schollz/progressbar v1.0.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
