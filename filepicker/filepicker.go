@@ -32,7 +32,7 @@ type Ctx struct {
 	script.Seed
 }
 
-func (filepicker Seed) Ctx(q seed.Script) Ctx {
+func (filepicker Seed) Ctx(q script.Ctx) Ctx {
 	return Ctx{filepicker.Seed.Ctx(q)}
 }
 

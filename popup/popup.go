@@ -3,6 +3,7 @@ package popup
 
 import (
 	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
 	"github.com/qlova/seed/style/css"
 	"github.com/qlova/seeds/column"
 )
@@ -39,11 +40,11 @@ func AddTo(parent seed.Interface) Seed {
 }
 
 //Show this popup.
-func (popup Seed) Show(q seed.Script) {
+func (popup Seed) Show(q script.Ctx) {
 	popup.Ctx(q).SetVisible()
 }
 
 //Hide this popup.
-func (popup Seed) Hide(q seed.Script) {
+func (popup Seed) Hide(q script.Ctx) {
 	popup.Ctx(q).SetHidden()
 }
