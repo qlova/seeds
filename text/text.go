@@ -6,6 +6,8 @@ import (
 
 	"github.com/qlova/seed"
 	"github.com/qlova/seed/style"
+	"github.com/qlova/seed/style/css"
+	"github.com/qlova/seed/unit"
 )
 
 type Seed struct {
@@ -43,9 +45,10 @@ func New(message ...string) Seed {
 		Text.ReactNative().SetContent("Text")
 	}
 
-	Text.SetSize(seed.Auto, seed.Auto)
+	Text.SetSize(unit.Auto, unit.Auto)
 
-	Text.Align(0)
+	Text.Align().Center()
+	Text.TextAlign().Center()
 
 	return Seed{Text}
 }
@@ -54,4 +57,32 @@ func AddTo(parent seed.Interface, message ...string) Seed {
 	var Text = New(message...)
 	parent.Root().Add(Text)
 	return Text
+}
+
+//Aligner aligns text.
+type Aligner struct {
+	style style.Style
+}
+
+//Left aligned text.
+func (a Aligner) Left() {
+	a.style.SetAlignSelf(css.FlexStart)
+	a.style.SetTextAlign(css.Left)
+}
+
+//Right aligned text.
+func (a Aligner) Right() {
+	a.style.SetAlignSelf(css.FlexEnd)
+	a.style.SetTextAlign(css.Right)
+}
+
+//Center aligned text.
+func (a Aligner) Center() {
+	a.style.SetAlignSelf(css.Center)
+	a.style.SetTextAlign(css.Center)
+}
+
+//Align returns an aligner for aligning text.
+func (text Seed) Align() Aligner {
+	return Aligner{text.Style}
 }

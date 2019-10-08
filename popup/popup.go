@@ -17,12 +17,11 @@ type Seed struct {
 func New() Seed {
 	var Popup = column.New()
 
-	Popup.AlignChildren(0)
-	Popup.SetChildAlignment(0)
+	Popup.ItemSpacing().Center()
+	Popup.AlignItems().Center()
 	Popup.SetHidden()
 	Popup.SetColor(seed.RGBA(0, 0, 0, 128))
 	Popup.SetLayer(999)
-	Popup.CenterChildren()
 	Popup.CSS().SetPosition(css.Fixed)
 	Popup.CSS().SetTop(css.Zero)
 	Popup.CSS().SetLeft(css.Zero)

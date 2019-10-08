@@ -27,7 +27,7 @@ type Ctx struct {
 	script.Seed
 }
 
-func (checkbox Seed) Ctx(q seed.Script) Ctx {
+func (checkbox Seed) Ctx(q script.Ctx) Ctx {
 	return Ctx{checkbox.Seed.Ctx(q)}
 }
 

@@ -57,7 +57,7 @@ func AddTo(parent seed.Interface) Seed {
 	return DateBox
 }
 
-func (datebox Seed) Ctx(q seed.Script) Ctx {
+func (datebox Seed) Ctx(q script.Ctx) Ctx {
 	return Ctx{
 		datebox.Seed.Ctx(q),
 		datebox.fakebox.Seed.Ctx(q),

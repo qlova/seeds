@@ -1,9 +1,13 @@
 //Provides a basic slider that can be used as in input for a range of values.
 package slider
 
-import "strconv"
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/script"
+import (
+	"strconv"
+
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+	"github.com/qlova/seed/unit"
+)
 
 type Seed struct {
 	seed.Seed
@@ -15,9 +19,9 @@ func New() Seed {
 	Slider.SetTag("input")
 	Slider.SetAttributes("type='range'")
 
-	Slider.SetSize(seed.Auto, seed.Auto)
+	Slider.SetSize(unit.Auto, unit.Auto)
 
-	Slider.Align(0)
+	Slider.Align().Center()
 
 	return Seed{Slider}
 }

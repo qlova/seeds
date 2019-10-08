@@ -1,7 +1,10 @@
 //Provide a seperator that renders as a line that can visually break different sections of a container.
 package line
 
-import "github.com/qlova/seed"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/unit"
+)
 
 type Seed struct {
 	seed.Seed
@@ -12,7 +15,7 @@ func New() Seed {
 
 	Line.SetTag("hr")
 	Line.CSS().Set("border", "none")
-	Line.SetSize(100, 1*seed.Px)
+	Line.SetSize(100, 1*unit.Px)
 
 	return Seed{Line}
 }

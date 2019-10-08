@@ -7,6 +7,7 @@ import (
 	"github.com/qlova/seed/script"
 	"github.com/qlova/seed/script/global"
 	"github.com/qlova/seed/style/css"
+	"github.com/qlova/seed/unit"
 )
 
 //Seed is a textbox that allows single-line text input.
@@ -27,9 +28,9 @@ func New() Seed {
 
 	TextBox.SetTag("input")
 
-	TextBox.SetSize(seed.Auto, seed.Auto)
+	TextBox.SetSize(unit.Auto, unit.Auto)
 
-	TextBox.Align(0)
+	TextBox.Align().Center()
 
 	var FullscreenEditor = seed.AddTo(TextBox)
 	FullscreenEditor.SetHidden()

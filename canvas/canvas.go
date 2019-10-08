@@ -1,11 +1,14 @@
 //Provides a canvas that can be rendered on with webGL.
 package canvas
 
-import qlova "github.com/qlova/script"
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/gl"
-import "github.com/qlova/seed/script"
-import "github.com/qlova/seed/script/webgl"
+import (
+	qlova "github.com/qlova/script"
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/gl"
+	"github.com/qlova/seed/script"
+	"github.com/qlova/seed/script/webgl"
+	"github.com/qlova/seed/unit"
+)
 
 type Seed struct {
 	seed.Seed
@@ -15,7 +18,7 @@ func New() Seed {
 	var Canvas = seed.New()
 
 	Canvas.SetTag("canvas")
-	Canvas.SetSize(seed.Auto, seed.Auto)
+	Canvas.SetSize(unit.Auto, unit.Auto)
 
 	return Seed{Canvas}
 }

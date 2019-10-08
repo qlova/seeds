@@ -1,8 +1,11 @@
 //Provides basic toolbar that is sticky.
 package toolbar
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/style/css"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/style/css"
+	"github.com/qlova/seed/unit"
+)
 
 type Seed struct {
 	seed.Seed
@@ -18,7 +21,7 @@ func New() Seed {
 	ToolBar.SetLeft(css.Zero)
 
 	ToolBar.SetWidth(100)
-	ToolBar.SetHeight(2 * seed.Em)
+	ToolBar.SetHeight(2 * unit.Em)
 
 	ToolBar.Set("justify-content", "space-evenly")
 

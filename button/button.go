@@ -1,9 +1,12 @@
 //Provides a button that can be clicked on to trigger an action.
 package button
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/script"
-import "github.com/qlova/seeds/text"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+	"github.com/qlova/seed/unit"
+	"github.com/qlova/seeds/text"
+)
 
 type Seed struct {
 	seed.Seed
@@ -18,8 +21,8 @@ func New(label ...string) Seed {
 	//Fix issues with form validation.
 	Button.Set("type", "button")
 
-	Button.SetSize(seed.Auto, seed.Auto)
-	Button.AlignChildren(0)
+	Button.SetSize(unit.Auto, unit.Auto)
+	Button.ItemSpacing().Outside()
 
 	var Text = text.AddTo(Button, label...)
 
