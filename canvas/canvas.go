@@ -34,6 +34,16 @@ func (s Seed) OpenGL() gl.Context {
 	return gl.NewContext(s.Seed)
 }
 
+func (canvas Seed) OnDraw(f func(q script.Ctx)) {
+	canvas.On("draw", func(q script.Ctx) {
+		f(q)
+		q.Javascript(`requestAnimationFrame(` + canvas.Ctx(q).Element() + `.ondraw);`)
+	})
+	canvas.OnReady(func(q script.Ctx) {
+		q.Javascript(`requestAnimationFrame(` + canvas.Ctx(q).Element() + `.ondraw);`)
+	})
+}
+
 type Ctx struct {
 	script.Seed
 }
