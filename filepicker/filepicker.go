@@ -1,9 +1,12 @@
 //Provides a filepicker that allows the user to select a file from their filesystem.
 package filepicker
 
-import "strconv"
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/script"
+import (
+	"strconv"
+
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+)
 
 type Seed struct {
 	seed.Seed
@@ -40,4 +43,9 @@ func (filepicker Ctx) AttachTo(request string, index int) string {
 
 	return "for (let i = 0; i < " + filepicker.Element() + ".files.length; i++) " + request +
 		`.append("attachment-` + strconv.Itoa(index) + `-"+(i+1), ` + filepicker.Element() + `.files[i], ` + filepicker.Element() + `.files[i].name);`
+}
+
+//File returns the first file.
+func (filepicker Ctx) File() script.File {
+	return filepicker.Q.Value(filepicker.Element() + ".files[0]").File()
 }
