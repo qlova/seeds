@@ -51,21 +51,24 @@ func New() Seed {
 
 	FullscreenTextBox.OnEnter(func(q script.Ctx) {
 		KeyboardHidden.Set(q)
+		FullscreenTextBox.Ctx(q).Blur()
+		TextBox.Ctx(q).SetValue(FullscreenTextBox.Ctx(q).Value())
+		save.Set(q, TextBox.Ctx(q).Value())
+		q.After(250, func() {
+			FullscreenEditor.Ctx(q).SetHidden()
+		})
 	})
 	FullscreenTextBox.OnFocusLost(func(q script.Ctx) {
 		KeyboardHidden.Set(q)
+		FullscreenTextBox.Ctx(q).Blur()
+		TextBox.Ctx(q).SetValue(FullscreenTextBox.Ctx(q).Value())
+		save.Set(q, TextBox.Ctx(q).Value())
+		q.After(250, func() {
+			FullscreenEditor.Ctx(q).SetHidden()
+		})
 	})
 	FullscreenTextBox.OnClick(func(q script.Ctx) {
 		KeyboardHidden.Set(q)
-	})
-
-	TextBox.When(KeyboardVisible, func(q script.Ctx) {
-		FullscreenEditor.Ctx(q).SetVisible()
-		FullscreenTextBox.Ctx(q).Focus()
-		FullscreenTextBox.Ctx(q).SetValue(TextBox.Ctx(q).Value())
-	})
-
-	TextBox.When(KeyboardHidden, func(q script.Ctx) {
 		FullscreenTextBox.Ctx(q).Blur()
 		TextBox.Ctx(q).SetValue(FullscreenTextBox.Ctx(q).Value())
 		save.Set(q, TextBox.Ctx(q).Value())
@@ -80,13 +83,18 @@ func New() Seed {
 			q.Javascript(`let done = false; for (t of [100, 250, 500, 600, 700, 800, 900, 1000]) { setTimeout(function(){if (!done && height > document.body.clientHeight) {done=true;`)
 
 			KeyboardVisible.Set(q)
+			FullscreenEditor.Ctx(q).SetVisible()
+			FullscreenTextBox.Ctx(q).Focus()
+			FullscreenTextBox.Ctx(q).SetValue(TextBox.Ctx(q).Value())
 
 			q.Javascript(`let new_height = document.body.clientHeight; let f = function() {
 				if (!done) return;
 				
 				if (document.body.clientHeight > new_height) {`)
 
-			KeyboardHidden.Set(q)
+			FullscreenTextBox.Ctx(q).Blur()
+			TextBox.Ctx(q).SetValue(FullscreenTextBox.Ctx(q).Value())
+			save.Set(q, TextBox.Ctx(q).Value())
 			FullscreenEditor.Ctx(q).SetHidden()
 
 			q.Javascript(`return;}
