@@ -14,6 +14,7 @@ import (
 type Seed struct {
 	seed.Seed
 	Fullscreen seed.Seed
+	save       global.String
 }
 
 //KeyboardVisible is a state that is set whenever an on-screen keyboard is detected.
@@ -115,7 +116,7 @@ func New() Seed {
 		FullscreenTextBox.Ctx(q).SetValue(save.Get(q))
 	})
 
-	return Seed{TextBox, FullscreenTextBox}
+	return Seed{TextBox, FullscreenTextBox, save}
 }
 
 //AddTo parent.
@@ -150,11 +151,12 @@ func (textbox Seed) SetRequired() {
 type Ctx struct {
 	script.Seed
 	Fullscreen script.Seed
+	save       global.String
 }
 
 //Script returns the script context to this seed.
 func (textbox Seed) Ctx(q script.Ctx) Ctx {
-	return Ctx{textbox.Seed.Ctx(q), textbox.Fullscreen.Ctx(q)}
+	return Ctx{textbox.Seed.Ctx(q), textbox.Fullscreen.Ctx(q), textbox.save}
 }
 
 //SetReadOnly disables the textbox from being edited.
@@ -166,4 +168,10 @@ func (textbox Ctx) SetReadOnly(state script.Bool) {
 func (textbox Ctx) SetPlaceholder(placeholder script.String) {
 	textbox.Q.Javascript(textbox.Element() + ".placeholder = " + placeholder.LanguageType().Raw() + ";")
 	textbox.Q.Javascript(textbox.Fullscreen.Element() + ".placeholder = " + placeholder.LanguageType().Raw() + ";")
+}
+
+//SetValue sets the value of the textbox.
+func (textbox Ctx) SetValue(value script.String) {
+	textbox.Seed.SetValue(value)
+	textbox.save.Set(textbox.Q, value)
 }
