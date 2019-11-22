@@ -6,12 +6,15 @@ import (
 
 	"github.com/qlova/seed"
 	"github.com/qlova/seed/html"
+	"github.com/qlova/seed/script"
 )
 
+//Seed is an image
 type Seed struct {
 	seed.Seed
 }
 
+//New returns a new image.
 func New(source ...string) Seed {
 	var Image = seed.New()
 
@@ -23,12 +26,52 @@ func New(source ...string) Seed {
 		Image.Set("alt", p[:len(p)-len(path.Ext(p))])
 	}
 
+	Image.Element.Set("crossorigin", "")
+
 	return Seed{Image}
 }
 
-//Create a new Text widget and add it to the provided parent.
+//AddTo parent.
 func AddTo(parent seed.Interface, path ...string) Seed {
 	var Image = New(path...)
 	parent.Root().Add(Image)
 	return Image
+}
+
+//Ctx is an image ctx.
+type Ctx struct {
+	script.Seed
+}
+
+//Ctx returns the image's ctx.
+func (image Seed) Ctx(q script.Ctx) Ctx {
+	return Ctx{image.Seed.Ctx(q)}
+}
+
+const downloadJS = `
+	async function downloadIMG(img, name) {
+		
+		function toDataURL(url) {
+			return fetch(url).then((response) => {
+					return response.blob();
+				}).then(blob => {
+					return URL.createObjectURL(blob);
+				});
+		}
+		img.crossorigin = "anonymous";
+
+		let link = document.createElement('a');
+        link.download = name;
+		link.href = await toDataURL(img.src);;
+		
+		document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+	}
+`
+
+//Download downloads the image and names it.
+func (q Ctx) Download(name script.String) {
+	q.Q.Require(downloadJS)
+	q.Q.Javascript(`downloadIMG(%v, %v);`, q.Element(), name)
 }
