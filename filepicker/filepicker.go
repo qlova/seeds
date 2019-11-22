@@ -49,3 +49,8 @@ func (filepicker Ctx) AttachTo(request string, index int) string {
 func (filepicker Ctx) File() script.File {
 	return filepicker.Q.Value(filepicker.Element() + ".files[0]").File()
 }
+
+//Clear clears the file.
+func (filepicker Ctx) Clear() script.File {
+	return filepicker.Q.Value(filepicker.Element() + ".value = '';").File()
+}
