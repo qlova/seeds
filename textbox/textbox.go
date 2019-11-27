@@ -47,6 +47,7 @@ func New() Seed {
 
 	var FullscreenTextBox = seed.AddTo(FullscreenEditor)
 	FullscreenTextBox.SetTag("input")
+	FullscreenTextBox.Element.Set("disabled", "")
 	FullscreenTextBox.SetSize(100, 100)
 	FullscreenTextBox.SetTextAlign(css.Center)
 
@@ -57,6 +58,7 @@ func New() Seed {
 		save.Set(q, TextBox.Ctx(q).Value())
 		q.After(250, func() {
 			FullscreenEditor.Ctx(q).SetHidden()
+			q.Javascript(`%v.disabled = true;`, FullscreenTextBox.Ctx(q).Element())
 		})
 	})
 	FullscreenTextBox.OnFocusLost(func(q script.Ctx) {
@@ -66,6 +68,7 @@ func New() Seed {
 		save.Set(q, TextBox.Ctx(q).Value())
 		q.After(250, func() {
 			FullscreenEditor.Ctx(q).SetHidden()
+			q.Javascript(`%v.disabled = true;`, FullscreenTextBox.Ctx(q).Element())
 		})
 	})
 	FullscreenTextBox.OnClick(func(q script.Ctx) {
@@ -75,6 +78,7 @@ func New() Seed {
 		save.Set(q, TextBox.Ctx(q).Value())
 		q.After(250, func() {
 			FullscreenEditor.Ctx(q).SetHidden()
+			q.Javascript(`%v.disabled = true;`, FullscreenTextBox.Ctx(q).Element())
 		})
 	})
 
@@ -87,6 +91,7 @@ func New() Seed {
 			FullscreenEditor.Ctx(q).SetVisible()
 			FullscreenTextBox.Ctx(q).Focus()
 			FullscreenTextBox.Ctx(q).SetValue(TextBox.Ctx(q).Value())
+			q.Javascript(`%v.disabled = false;`, FullscreenTextBox.Ctx(q).Element())
 
 			q.Javascript(`let new_height = document.body.clientHeight; let f = function() {
 				if (!done) return;
