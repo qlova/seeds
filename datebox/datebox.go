@@ -19,8 +19,8 @@ func New() Seed {
 
 	FakeBox.SetAttributes("type='date'")
 	FakeBox.SetOpacity(0)
-	FakeBox.SetPosition(css.Absolute)
-	FakeBox.SetPointerEvents(css.None)
+	FakeBox.CSS().SetPosition(css.Absolute)
+	FakeBox.CSS().SetPointerEvents(css.None)
 
 	FakeBox.OnChange(func(q script.Ctx) {
 		TextBox.Ctx(q).SetValue(FakeBox.Ctx(q).Value())

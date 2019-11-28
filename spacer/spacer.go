@@ -12,7 +12,7 @@ func New(amount ...complex128) Seed {
 	var Spacer = seed.New()
 
 	if len(amount) > 0 {
-		Spacer.SetFlexBasis(css.Decode(amount[0]))
+		Spacer.CSS().SetFlexBasis(css.Decode(amount[0]))
 	}
 
 	Spacer.SetUnshrinkable()

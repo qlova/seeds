@@ -14,11 +14,11 @@ type Seed struct {
 func New() Seed {
 	var ToolBar = seed.New()
 
-	ToolBar.Stylable.Set("display", "flex")
-	ToolBar.Stylable.Set("position", "fixed")
-	ToolBar.SetFlexDirection(css.Row)
-	ToolBar.SetBottom(css.Zero)
-	ToolBar.SetLeft(css.Zero)
+	ToolBar.CSS().Set("display", "flex")
+	ToolBar.CSS().Set("position", "fixed")
+	ToolBar.CSS().SetFlexDirection(css.Row)
+	ToolBar.CSS().SetBottom(css.Zero)
+	ToolBar.CSS().SetLeft(css.Zero)
 
 	ToolBar.SetWidth(100)
 	ToolBar.SetHeight(2 * unit.Em)

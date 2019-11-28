@@ -15,8 +15,8 @@ func New() Seed {
 	Form.SetTag("form")
 	Form.SetAttributes(`onsubmit="return false;"`)
 
-	Form.SetDisplay(css.Flex)
-	Form.SetFlexDirection(css.Column)
+	Form.CSS().SetDisplay(css.Flex)
+	Form.CSS().SetFlexDirection(css.Column)
 
 	return Seed{Form}
 }

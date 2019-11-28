@@ -11,8 +11,8 @@ type Seed struct {
 func New() Seed {
 	var Row = seed.New()
 
-	Row.SetDisplay(css.Flex)
-	Row.SetFlexDirection(css.Row)
+	Row.CSS().SetDisplay(css.Flex)
+	Row.CSS().SetFlexDirection(css.Row)
 
 	return Seed{Row}
 }

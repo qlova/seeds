@@ -66,20 +66,20 @@ type Aligner struct {
 
 //Left aligned text.
 func (a Aligner) Left() {
-	a.style.SetAlignSelf(css.FlexStart)
-	a.style.SetTextAlign(css.Left)
+	a.style.CSS().SetAlignSelf(css.FlexStart)
+	a.style.CSS().SetTextAlign(css.Left)
 }
 
 //Right aligned text.
 func (a Aligner) Right() {
-	a.style.SetAlignSelf(css.FlexEnd)
-	a.style.SetTextAlign(css.Right)
+	a.style.CSS().SetAlignSelf(css.FlexEnd)
+	a.style.CSS().SetTextAlign(css.Right)
 }
 
 //Center aligned text.
 func (a Aligner) Center() {
-	a.style.SetAlignSelf(css.Center)
-	a.style.SetTextAlign(css.Center)
+	a.style.CSS().SetAlignSelf(css.Center)
+	a.style.CSS().SetTextAlign(css.Center)
 }
 
 //Align returns an aligner for aligning text.
