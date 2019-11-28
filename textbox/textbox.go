@@ -49,7 +49,7 @@ func New() Seed {
 	FullscreenTextBox.SetTag("input")
 	FullscreenTextBox.Element.Set("disabled", "")
 	FullscreenTextBox.SetSize(100, 100)
-	FullscreenTextBox.SetTextAlign(css.Center)
+	FullscreenTextBox.CSS().SetTextAlign(css.Center)
 
 	FullscreenTextBox.OnEnter(func(q script.Ctx) {
 		KeyboardHidden.Set(q)
@@ -89,9 +89,9 @@ func New() Seed {
 
 			KeyboardVisible.Set(q)
 			FullscreenEditor.Ctx(q).SetVisible()
+			q.Javascript(`%v.disabled = false;`, FullscreenTextBox.Ctx(q).Element())
 			FullscreenTextBox.Ctx(q).Focus()
 			FullscreenTextBox.Ctx(q).SetValue(TextBox.Ctx(q).Value())
-			q.Javascript(`%v.disabled = false;`, FullscreenTextBox.Ctx(q).Element())
 
 			q.Javascript(`let new_height = document.body.clientHeight; let f = function() {
 				if (!done) return;
