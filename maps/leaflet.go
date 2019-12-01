@@ -1,9 +1,12 @@
 //Provide an embedded leaflet map.
 package maps
 
-import "encoding/json"
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/script"
+import (
+	"encoding/json"
+
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+)
 
 func init() {
 	seed.Embed("/leaflet.js", []byte(Javascript))
@@ -55,4 +58,18 @@ func (maps Seed) Ctx(q script.Ctx) Ctx {
 func (maps Ctx) FlyTo(location script.Location) {
 	var raw = location.LanguageType().Raw()
 	maps.Q.Javascript(maps.Element() + ".map.flyTo(L.latLng(" + raw + ".coords.latitude, " + raw + ".coords.longitude))")
+}
+
+func (maps Ctx) Location() script.Location {
+	var q = maps.Q
+	q.Require(`function maps_get_location_of(map) {
+		let center = map.getCenter();
+		return {
+			coord: {
+				latitude: center.lat,
+				longitude: center.lng,
+			},
+		}
+	}`)
+	return q.Value(`maps_get_location_of(%v.map)`, maps.Element()).Location()
 }
