@@ -20,7 +20,7 @@ func New(source ...string) Seed {
 
 	Image.SetTag("img")
 	if len(source) > 0 {
-		var p = source[0]
+		var p = "/" + source[0]
 		Image.Element.Set(html.Source, p)
 		seed.NewAsset(p).AddTo(Image)
 		Image.Set("alt", p[:len(p)-len(path.Ext(p))])
