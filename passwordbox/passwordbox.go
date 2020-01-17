@@ -74,6 +74,7 @@ func (passwordbox Ctx) Hash() script.Promise {
 		distPath: '' // asm.js script location, without trailing slash
 	}).then(function(result) {
 		` + passwordbox.Element() + `.hashedValue = result.hashHex;
+		return result.hashHex;
 	})`).Promise()
 }
 
@@ -92,7 +93,7 @@ func (passwordbox Ctx) With(args script.Args) Ctx {
 //HashAndGo hashes and then runs the function f with the user and hash as arguments.
 func (passwordbox Ctx) HashAndGo(f func(user.User, password.Hash)) script.Promise {
 	var q = passwordbox.Q
-	return passwordbox.Hash().Then(func() {
+	return passwordbox.Hash().Then(func(d script.Dynamic) {
 		q.Return(q.With(script.Args{
 			"hash": passwordbox.HashedValue(),
 		}).With(passwordbox.with).Go(func(u user.User) {
