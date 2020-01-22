@@ -10,6 +10,12 @@ import (
 	"github.com/qlova/seed/unit"
 )
 
+//Options for textbox.
+type Options struct {
+	//Discard the value when the app is restarted.
+	Discard bool
+}
+
 //Seed is a textbox that allows single-line text input.
 type Seed struct {
 	seed.Seed
@@ -24,7 +30,12 @@ var KeyboardVisible = seed.NewState()
 var KeyboardHidden = KeyboardVisible.Not()
 
 //New creates a new textbox.
-func New() Seed {
+func New(options ...Options) Seed {
+	var option Options
+	if len(options) > 0 {
+		option = options[0]
+	}
+
 	var TextBox = seed.New()
 
 	TextBox.SetTag("input")
@@ -113,20 +124,22 @@ func New() Seed {
 		})
 	})
 
-	TextBox.OnChange(func(q script.Ctx) {
-		save.Set(q, TextBox.Ctx(q).Value())
-	})
-	TextBox.OnReady(func(q script.Ctx) {
-		TextBox.Ctx(q).SetValue(save.Get(q))
-		FullscreenTextBox.Ctx(q).SetValue(save.Get(q))
-	})
+	if !option.Discard {
+		TextBox.OnChange(func(q script.Ctx) {
+			save.Set(q, TextBox.Ctx(q).Value())
+		})
+		TextBox.OnReady(func(q script.Ctx) {
+			TextBox.Ctx(q).SetValue(save.Get(q))
+			FullscreenTextBox.Ctx(q).SetValue(save.Get(q))
+		})
+	}
 
 	return Seed{TextBox, FullscreenTextBox, save}
 }
 
 //AddTo parent.
-func AddTo(parent seed.Interface) Seed {
-	var TextBox = New()
+func AddTo(parent seed.Interface, options ...Options) Seed {
+	var TextBox = New(options...)
 	parent.Root().Add(TextBox)
 	return TextBox
 }
