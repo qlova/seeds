@@ -4,6 +4,7 @@ package button
 import (
 	"github.com/qlova/seed"
 	"github.com/qlova/seed/script"
+	"github.com/qlova/seed/style/css"
 	"github.com/qlova/seed/unit"
 	"github.com/qlova/seeds/text"
 )
@@ -20,6 +21,8 @@ func New(label ...string) Seed {
 
 	//Fix issues with form validation.
 	Button.Set("type", "button")
+
+	Button.CSS().SetDisplay(css.Flex)
 
 	Button.SetSize(unit.Auto, unit.Auto)
 	Button.ItemSpacing().Outside()
