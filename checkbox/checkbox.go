@@ -1,8 +1,11 @@
 //Provides a checkbox that can in either a checked or unchecked state.
 package checkbox
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/script"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+	"github.com/qlova/seed/style/css"
+)
 
 type Seed struct {
 	seed.Seed
@@ -21,6 +24,12 @@ func AddTo(parent seed.Interface) Seed {
 	var Checkbox = New()
 	parent.Root().Add(Checkbox)
 	return Checkbox
+}
+
+//SetReadOnly sets this seed to be read only.
+func (checkbox Seed) SetReadOnly() {
+	checkbox.CSS().SetPointerEvents(css.None)
+	checkbox.Seed.SetAttributes(checkbox.Seed.Attributes() + " readonly")
 }
 
 type Ctx struct {
