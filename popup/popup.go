@@ -38,12 +38,39 @@ func AddTo(parent seed.Interface) Seed {
 	return Popup
 }
 
+func (popup Seed) SetTransition(trans seed.Transition) {
+	if trans.In != nil || !trans.When.Null() || trans.WhenTag != "" || trans.WhenBack {
+		popup.OnShow(func(q script.Ctx) {
+			var Page = popup.Ctx(q)
+			seed.SetTransitionIn(Page, trans)
+		})
+	}
+	if trans.Out != nil || !trans.When.Null() || trans.WhenTag != "" || trans.WhenBack {
+		popup.OnHide(func(q script.Ctx) {
+			var Page = popup.Ctx(q)
+			seed.SetTransitionOut(Page, trans)
+		})
+	}
+}
+
 //Show this popup.
 func (popup Seed) Show(q script.Ctx) {
+	q.Javascript(`if (%[1]v.onshow) %[1]v.onshow();`, popup.Ctx(q).Element())
 	popup.Ctx(q).SetVisible()
+}
+
+//OnShow runs the callback when the popup is shown.
+func (popup Seed) OnShow(s func(q script.Ctx)) {
+	popup.On("show", s)
 }
 
 //Hide this popup.
 func (popup Seed) Hide(q script.Ctx) {
+	q.Javascript(`if (%[1]v.onhide) { %[1]v.onhide(); await goto_exitpromise; }`, popup.Ctx(q).Element())
 	popup.Ctx(q).SetHidden()
+}
+
+//OnHide runs the callback when the popup is shown.
+func (popup Seed) OnHide(s func(q script.Ctx)) {
+	popup.On("hide", s)
 }
