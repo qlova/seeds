@@ -15,7 +15,7 @@ func New() Seed {
 	var Checkbox = seed.New()
 
 	Checkbox.SetTag("input")
-	Checkbox.SetAttributes("type='checkbox'")
+	Checkbox.Element.Set(`type`, `checkbox`)
 
 	return Seed{Checkbox}
 }
