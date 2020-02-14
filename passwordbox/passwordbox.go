@@ -10,7 +10,7 @@ import (
 func init() {
 	var js, _ = Asset("argon2.js")
 
-	seed.Embed("/dist/argon2.js", js)
+	seed.Embed("/argon2.js", js)
 
 	seed.Embed("/argon2-browser.js", []byte(Lib))
 

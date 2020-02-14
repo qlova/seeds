@@ -71,9 +71,9 @@ const Lib = `(function(root, factory) {
             return global.loadArgon2WasmModule();
         }
         if (typeof require === 'function') {
-            return Promise.resolve(require('../dist/argon2.js'));
+            return Promise.resolve(require('/argon2.js'));
         }
-        return import('../dist/argon2.js');
+        return import('/argon2.js');
     }
 
     function loadWasmBinary() {
@@ -81,7 +81,7 @@ const Lib = `(function(root, factory) {
             return global.loadArgon2WasmBinary();
         }
         if (typeof require === 'function') {
-            return Promise.resolve(require('../dist/argon2.wasm')).then(
+            return Promise.resolve(require('/argon2.wasm')).then(
                 wasmModule => {
                     return decodeWasmBinary(wasmModule);
                 }
@@ -89,7 +89,7 @@ const Lib = `(function(root, factory) {
         }
         const wasmPath =
             global.argon2WasmPath ||
-            'argon2.wasm';
+            '/argon2.wasm';
         return fetch(wasmPath)
             .then(response => response.arrayBuffer())
             .then(ab => new Uint8Array(ab));
