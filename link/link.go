@@ -1,8 +1,10 @@
 //Provides a linke that can be clicked on to launch a website.
 package link
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/script"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+)
 
 type Seed struct {
 	seed.Seed
@@ -40,7 +42,7 @@ func (link Ctx) Target() script.String {
 }
 
 func (link Ctx) SetTarget(target script.String) {
-	link.Q.Javascript(link.Element() + `.href = ` + string(target.LanguageType().Raw()) + ";")
+	link.Q.Javascript(link.Element() + `.href = ` + string(link.Q.Raw(target)) + ";")
 }
 
 func (link Ctx) Open() {

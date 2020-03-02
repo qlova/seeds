@@ -43,6 +43,12 @@ func AddTo(parent seed.Interface) Seed {
 	return PasswordBox
 }
 
+//ValueFromCtx implements script.AnyValue
+func (passwordbox Seed) ValueFromCtx(ctx script.AnyCtx) script.Value {
+	q := script.CtxFromAnyCtx(ctx)
+	return passwordbox.Ctx(q).Value()
+}
+
 //Ctx is the script context to this seed.
 type Ctx struct {
 	textbox.Ctx
@@ -61,7 +67,7 @@ func (passwordbox Ctx) Hash() script.Promise {
 	var value = passwordbox.Ctx.Value()
 	return q.Value(`argon2.hash({
 		// required
-		pass: ` + value.LanguageType().Raw() + `,
+		pass: ` + q.Raw(value) + `,
 		salt: window.location.hostname,
 
 		time: 1,

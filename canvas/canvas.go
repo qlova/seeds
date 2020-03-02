@@ -4,9 +4,7 @@ package canvas
 import (
 	qlova "github.com/qlova/script"
 	"github.com/qlova/seed"
-	"github.com/qlova/seed/gl"
 	"github.com/qlova/seed/script"
-	"github.com/qlova/seed/script/webgl"
 	"github.com/qlova/seed/unit"
 )
 
@@ -30,9 +28,9 @@ func AddTo(parent seed.Interface) Seed {
 }
 
 //Return an OpenGL context for this canvas.
-func (s Seed) OpenGL() gl.Context {
+/*func (s Seed) OpenGL() gl.Context {
 	return gl.NewContext(s.Seed)
-}
+}*/
 
 func (canvas Seed) OnDraw(f func(q script.Ctx)) {
 	canvas.On("draw", func(q script.Ctx) {
@@ -52,9 +50,9 @@ func (canvas Seed) Ctx(q script.Ctx) Ctx {
 	return Ctx{canvas.Seed.Ctx(q)}
 }
 
-func (canvas Ctx) OpenGL() webgl.Context {
+/*func (canvas Ctx) OpenGL() webgl.Context {
 	return webgl.NewContext(canvas.Seed)
-}
+}*/
 
 func (canvas Ctx) Width() qlova.Float {
 	return canvas.Q.Value(canvas.Element() + ".scrollWidth").Float()

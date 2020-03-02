@@ -96,7 +96,7 @@ func New(options ...Options) Seed {
 	TextBox.OnFocus(func(q script.Ctx) {
 		q.Javascript(`let height = document.body.clientHeight;`)
 		q.After(100, func() {
-			q.Javascript(`let done = false; for (t of [100, 250, 500, 600, 700, 800, 900, 1000]) { setTimeout(function(){if (!done && height > document.body.clientHeight) {done=true;`)
+			q.Javascript(`let done = false; for (t of [100, 250, 500, 600, 700, 800, 900, 1000]) { setTimeout(async function(){if (!done && height > document.body.clientHeight) {done=true;`)
 
 			KeyboardVisible.Set(q)
 			FullscreenEditor.Ctx(q).SetVisible()
@@ -179,13 +179,13 @@ func (textbox Seed) Ctx(q script.Ctx) Ctx {
 
 //SetReadOnly disables the textbox from being edited.
 func (textbox Ctx) SetReadOnly(state script.Bool) {
-	textbox.Q.Javascript(textbox.Element() + ".readOnly = " + state.LanguageType().Raw() + ";")
+	textbox.Q.Javascript(textbox.Element() + ".readOnly = " + textbox.Q.Raw(state) + ";")
 }
 
 //SetPlaceholder sets this seed's placeholder.
 func (textbox Ctx) SetPlaceholder(placeholder script.String) {
-	textbox.Q.Javascript(textbox.Element() + ".placeholder = " + placeholder.LanguageType().Raw() + ";")
-	textbox.Q.Javascript(textbox.Fullscreen.Element() + ".placeholder = " + placeholder.LanguageType().Raw() + ";")
+	textbox.Q.Javascript(textbox.Element() + ".placeholder = " + textbox.Q.Raw(placeholder) + ";")
+	textbox.Q.Javascript(textbox.Fullscreen.Element() + ".placeholder = " + textbox.Q.Raw(placeholder) + ";")
 }
 
 //SetValue sets the value of the textbox.

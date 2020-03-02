@@ -1,8 +1,10 @@
 //Provides a simple text editor with line numbers.
 package editor
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/script"
+import (
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+)
 
 func init() {
 	seed.Embed("/ace.js", []byte(Javascript))
@@ -42,5 +44,5 @@ type Editor struct {
 }
 
 func (editor Editor) Open(f script.File) {
-	editor.Javascript(`var reader = new FileReader(); reader.onload = function(e) { var data = e.target.result; get("` + editor.ID + `").editor.setValue(data); }; reader.readAsText(` + f.LanguageType().Raw() + `);`)
+	editor.Javascript(`var reader = new FileReader(); reader.onload = function(e) { var data = e.target.result; get("` + editor.ID + `").editor.setValue(data); }; reader.readAsText(` + editor.Q.Raw(f) + `);`)
 }

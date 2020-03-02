@@ -56,7 +56,7 @@ func (maps Seed) Ctx(q script.Ctx) Ctx {
 }
 
 func (maps Ctx) FlyTo(location script.Location) {
-	var raw = location.LanguageType().Raw()
+	var raw = maps.Q.Raw(location)
 	maps.Q.Javascript(maps.Element() + ".map.flyTo(L.latLng(" + raw + ".coords.latitude, " + raw + ".coords.longitude))")
 }
 

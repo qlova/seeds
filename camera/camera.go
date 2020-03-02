@@ -1,10 +1,12 @@
 //Provides an embeded camera that can save snapshots.
 package camera
 
-import "strconv"
+import (
+	"strconv"
 
-import "github.com/qlova/seed"
-import "github.com/qlova/seed/script"
+	"github.com/qlova/seed"
+	"github.com/qlova/seed/script"
+)
 
 type Seed struct {
 	seed.Seed
@@ -54,7 +56,7 @@ type Image struct {
 
 //Return a source that can be passed to image.SetSource
 func (image Image) Source() script.String {
-	return image.Q.Value(image.LanguageType().Raw() + ".toDataURL('image/jpg')").String()
+	return image.Q.Value(image.Q.Raw(image) + ".toDataURL('image/jpg')").String()
 }
 
 func (camera Ctx) Capture() Image {
@@ -69,5 +71,5 @@ func (camera Ctx) Capture() Image {
 }
 
 func (image Image) AttachTo(request string, index int) string {
-	return request + `.append("attachment-` + strconv.Itoa(index) + `-1", ` + image.LanguageType().Raw() + `.toBlob(function(b){}, 'image/jpeg', 0.95), 'camera.jpeg');`
+	return request + `.append("attachment-` + strconv.Itoa(index) + `-1", ` + image.Q.Raw(image) + `.toBlob(function(b){}, 'image/jpeg', 0.95), 'camera.jpeg');`
 }

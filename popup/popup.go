@@ -53,10 +53,38 @@ func (popup Seed) SetTransition(trans seed.Transition) {
 	}
 }
 
+const js = `seeds.popup = {};
+seeds.popup.show = async function(element) {
+	if (getComputedStyle(element).display == "none") {
+		element.style.display = "flex";
+		if (element.onshow) {
+			await element.onshow();
+			if (seed.goto.in) {
+				await seed.goto.in;
+				seed.goto.in = null;
+			}
+		}
+	}
+};
+
+seeds.popup.hide = async function(element) {
+	if (getComputedStyle(element).display != "none") {
+		element.style.display = "none";
+		if (element.onhide) {
+			await element.onhide();
+			if (seed.goto.out) {
+				await seed.goto.out;
+				seed.goto.out = null;
+			}
+		}
+	}
+};
+`
+
 //Show this popup.
 func (popup Seed) Show(q script.Ctx) {
-	q.Javascript(`if (%[1]v.onshow) %[1]v.onshow();`, popup.Ctx(q).Element())
-	popup.Ctx(q).SetVisible()
+	q.Require(js)
+	q.Javascript("seeds.popup.show(%v);", popup.Ctx(q).Element())
 }
 
 //OnShow runs the callback when the popup is shown.
@@ -66,8 +94,8 @@ func (popup Seed) OnShow(s func(q script.Ctx)) {
 
 //Hide this popup.
 func (popup Seed) Hide(q script.Ctx) {
-	q.Javascript(`if (%[1]v.onhide) { %[1]v.onhide(); await goto_exitpromise; }`, popup.Ctx(q).Element())
-	popup.Ctx(q).SetHidden()
+	q.Require(js)
+	q.Javascript("seeds.popup.hide(%v);", popup.Ctx(q).Element())
 }
 
 //OnHide runs the callback when the popup is shown.

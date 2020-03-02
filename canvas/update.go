@@ -13,7 +13,7 @@ type Update struct {
 }
 
 //For returns an update to this seed.
-func (seed Seed) For(u user.User) Update {
+func (seed Seed) For(u user.Ctx) Update {
 	return Update{seed.Seed.For(u)}
 }
 
